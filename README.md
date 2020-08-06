@@ -1,4 +1,4 @@
-# TU Wien Adressbook
+# TU Wien Addressbook
 A very simple addressbook app for Android and iOS to search employees of the 
 TU Wien.
 
