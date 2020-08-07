@@ -1,4 +1,4 @@
-name: tu_wien_adressbook
+name: tu_wien_addressbook
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -11,7 +11,7 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 0.1.0+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -32,6 +32,10 @@ dependencies:
 
   # To make the json_serializable work
   json_annotation: ^3.0.1
+
+  # A library to display hyperlinks
+  url_launcher: ^5.5.0
+
 
 
 

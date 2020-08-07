@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:uri/uri.dart';
-import 'package:tu_wien_adressbook/models/person.dart';
-import 'package:tu_wien_adressbook/models/tiss.dart';
-import 'package:tu_wien_adressbook/widgets/person_card.dart';
+import 'package:tu_wien_addressbook/models/person.dart';
+import 'package:tu_wien_addressbook/models/tiss.dart';
+import 'package:tu_wien_addressbook/widgets/person_screen.dart';
+import 'package:tu_wien_addressbook/widgets/person_entry.dart';
 import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       home: MyHomePage(title: 'TU Addressbook'),
     );
@@ -72,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () async {
                 Person p = await showSearch(
                     context: context, delegate: PersonSearch());
+                if (p == null) return;
                 setState(() {
                   person = p;
                 });
@@ -131,11 +133,16 @@ class PersonSearch extends SearchDelegate<Person> {
           var map = jsonDecode(resp.body);
           Tiss data = Tiss.fromJson(map);
 
+          // Show a error if there are no results
+          if (data.results.length == 0) {
+            return Center(child: Text("No persons found. 🤬"));
+          }
+
           return ListView.builder(
               itemCount: data.results.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  child: PersonCard(data.results[index]),
+                  child: PersonEntry(data.results[index]),
                   onTap: () {
                     close(context, data.results[index]);
                   },

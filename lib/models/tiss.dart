@@ -1,5 +1,5 @@
-import 'package:tu_wien_adressbook/models/person.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:tu_wien_addressbook/models/person.dart';
 
 part 'tiss.g.dart';
 

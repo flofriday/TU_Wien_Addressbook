@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'person.g.dart';
@@ -60,6 +61,14 @@ class Person {
     return name;
   }
 
+  String getTissUrl() {
+    if (this.pictureUri != null) {
+      return "https://tiss.tuwien.ac.at" + this.tissUri;
+    }
+
+    return null;
+  }
+
   String getPictureUrl() {
     if (this.pictureUri != null) {
       return "https://tiss.tuwien.ac.at" + this.pictureUri;
@@ -78,6 +87,23 @@ class Person {
     } else {
       return "unknown";
     }
+  }
+
+  CircleAvatar getCircleAvatar(double radius) {
+    if (this.pictureUri != null) {
+      return CircleAvatar(
+        radius: radius,
+        backgroundImage: NetworkImage(this.getPictureUrl()),
+      );
+    }
+
+    return CircleAvatar(
+      radius: radius,
+      child: Text(
+        this.firstName[0] + this.lastName[0],
+        style: TextStyle(fontSize: radius * 0.6),
+      ),
+    );
   }
 }
 
@@ -111,7 +137,7 @@ class Employee {
 
 @JsonSerializable(nullable: true)
 class Organisation {
-  @JsonKey(name: 'name_en')
+  @JsonKey(name: 'name_de')
   String name;
 
   Organisation();

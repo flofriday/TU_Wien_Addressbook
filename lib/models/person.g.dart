@@ -76,12 +76,12 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
     };
 
 Organisation _$OrganisationFromJson(Map<String, dynamic> json) {
-  return Organisation()..name = json['name_en'] as String;
+  return Organisation()..name = json['name_de'] as String;
 }
 
 Map<String, dynamic> _$OrganisationToJson(Organisation instance) =>
     <String, dynamic>{
-      'name_en': instance.name,
+      'name_de': instance.name,
     };
 
 Room _$RoomFromJson(Map<String, dynamic> json) {
