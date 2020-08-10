@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:uri/uri.dart';
 
 part 'person.g.dart';
 
@@ -59,6 +60,17 @@ class Person {
     }
 
     return name;
+  }
+
+  String getGender() {
+    if (this.gender == null) return "unbekannt";
+
+    if (this.gender == 'M')
+      return "männlich";
+    else if (this.gender == 'W')
+      return "weiblich";
+    else
+      return this.gender;
   }
 
   String getTissUrl() {
@@ -127,6 +139,9 @@ class Employee {
 
   Room room;
 
+  @JsonKey(name: 'phone_numbers')
+  List<String> phoneNumbers;
+
   List<Website> websites;
 
   Employee();
@@ -137,6 +152,9 @@ class Employee {
 
 @JsonSerializable(nullable: true)
 class Organisation {
+  @JsonKey(name: 'tiss_id')
+  int tissId;
+
   @JsonKey(name: 'name_de')
   String name;
 
@@ -144,6 +162,11 @@ class Organisation {
 
   factory Organisation.fromJson(Map<String, dynamic> json) =>
       _$OrganisationFromJson(json);
+
+  String getTissUrl() {
+    return "https://tiss.tuwien.ac.at/adressbuch/adressbuch/orgeinheit/" +
+        tissId.toString();
+  }
 }
 
 @JsonSerializable(nullable: true)
@@ -156,6 +179,16 @@ class Room {
   Room();
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
+
+  // Return a link to https://tuw-maps.tuwien.ac.at which highlights the room.
+  // Note to reader: it took me f***ing 30mins to figure out where I could get
+  // a map to highlight the room because TISS uses an internal code to show you
+  // the room which the API does not give you.
+  String getMapUrl() {
+    var template =
+        new UriTemplate("https://tuw-maps.tuwien.ac.at/?q={room}#map");
+    return template.expand({'room': this.roomCode});
+  }
 }
 
 @JsonSerializable(nullable: true)
@@ -173,6 +206,12 @@ class Address {
 
   factory Address.fromJson(Map<String, dynamic> json) =>
       _$AddressFromJson(json);
+
+  String toString() {
+    String text = "$street, $zipCode $city";
+    if (country != 'AT') text += " ($country)";
+    return text;
+  }
 }
 
 @JsonSerializable(nullable: true)

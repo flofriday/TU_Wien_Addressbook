@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tu_wien_addressbook/screens/settings_screen.dart';
+import 'package:tu_wien_addressbook/widgets/utils.dart';
 import 'package:uri/uri.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
 import 'package:tu_wien_addressbook/models/tiss.dart';
-import 'package:tu_wien_addressbook/widgets/person_screen.dart';
+import 'package:tu_wien_addressbook/screens/person_screen.dart';
 import 'package:tu_wien_addressbook/widgets/person_entry.dart';
 import 'package:http/http.dart' as http;
 
@@ -69,23 +71,46 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () async {
-                Person p = await showSearch(
-                    context: context, delegate: PersonSearch());
-                if (p == null) return;
-                setState(() {
-                  person = p;
-                });
-              })
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+          )
         ],
       ),
       body: PersonScreen(person),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          Person p =
+              await showSearch(context: context, delegate: PersonSearch());
+          if (p == null) return;
+          setState(() {
+            person = p;
+          });
+        },
+        child: Icon(Icons.search),
+        //backgroundColor: Colors.deepOrange,
+      ),
     );
   }
 }
 
 class PersonSearch extends SearchDelegate<Person> {
+  Future<http.Response> _makeRequest(String query) async {
+    var template = new UriTemplate(
+        "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=50&intern=true");
+    String apiUri = template.expand({'query': query});
+
+    String cookies = await getCookies();
+    var headers = {"Cookie": cookies};
+    print("");
+    print(headers);
+    return await http.get(apiUri, headers: headers);
+  }
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
@@ -110,10 +135,7 @@ class PersonSearch extends SearchDelegate<Person> {
 
   @override
   Widget buildResults(BuildContext context) {
-    var template = new UriTemplate(
-        "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=50&intern=true");
-    String apiUri = template.expand({'query': query});
-    Future<http.Response> response = http.get(apiUri);
+    Future<http.Response> response = _makeRequest(query);
 
     return FutureBuilder<http.Response>(
         future: response,

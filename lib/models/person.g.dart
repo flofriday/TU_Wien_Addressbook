@@ -62,6 +62,8 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) {
     ..room = json['room'] == null
         ? null
         : Room.fromJson(json['room'] as Map<String, dynamic>)
+    ..phoneNumbers =
+        (json['phone_numbers'] as List)?.map((e) => e as String)?.toList()
     ..websites = (json['websites'] as List)
         ?.map((e) =>
             e == null ? null : Website.fromJson(e as Map<String, dynamic>))
@@ -72,15 +74,19 @@ Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'org_ref': instance.orgRef,
       'function': instance.function,
       'room': instance.room,
+      'phone_numbers': instance.phoneNumbers,
       'websites': instance.websites,
     };
 
 Organisation _$OrganisationFromJson(Map<String, dynamic> json) {
-  return Organisation()..name = json['name_de'] as String;
+  return Organisation()
+    ..tissId = json['tiss_id'] as int
+    ..name = json['name_de'] as String;
 }
 
 Map<String, dynamic> _$OrganisationToJson(Organisation instance) =>
     <String, dynamic>{
+      'tiss_id': instance.tissId,
       'name_de': instance.name,
     };
 

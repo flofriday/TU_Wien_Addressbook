@@ -18,7 +18,7 @@ documentation about what the response json looks like or that you can set
 the language via a query parameter or that you will only receive student
 information if you are logged in.
 
-To search persons on the API, I use the `/api/person/v22/psuche` endpoint.
+To search people on the API, I use the `/api/person/v22/psuche` endpoint.
 Here is a full example:
 ```
 https://tiss.tuwien.ac.at/api/person/v22/psuche?q=Panholz&max_treffer=50
