@@ -33,14 +33,14 @@ Here is a list of all query parameters:
 | locale      | query | string   | The language of (some?) fields of the result. It uses 2 letter codes like "de" or "en". Default is ????        |
 
 ### How does the app log in, to get student information?
-So most same persons, would design the login process of an API with an API-token
+So most sane persons, would design the login process of an API with an API-token
 or maybe just let you send the username and password with every request. 
 
 Unfortunately, I couldn't find anything like that, so we gonna do it like the 
 Webinterface with cookies, parsing html, parsing URLs, following redirects and 
 many more cookies.
 
-Sounds fun? I guranteee you **it is not**!
+Sounds fun? I gurantee you **it is not**!
 
 #### STEP 0: Requirements
 Many requests will set you a cookie, so just save them and if you do a request 
@@ -50,7 +50,7 @@ in the future to the same domain just send them with the request.
 First start with a `GET` request to 
 `https://tiss.tuwien.ac.at/admin/authentifizierung`. The server will answer with
 302 (Redirect). Now you follow multiple redirects (like 5 or 6) until the server
-finally annswers with 200 (OK).
+finally answers with 200 (OK).
 
 Now parse the URL on which you finally landed on, because in the URL should be
 a query parameter called `AuthState` which we need to save for the next request.
@@ -61,18 +61,22 @@ Now, we need to make a `POST` request to
 
 The data we send with that request is form-encoded and there are the following
 fields:
+|Name|Content|
+|--|--|
 | username  | <your TU Wien username>                |
 | password  | <your TU Wien password>                |
 | totp      | <empty>                                |
 | AuthState | <the AuthState we collected in Step 1> |
 
-The server should now response with HTML. In this HTML is a Form with two hidden
+The server should now respond with HTML. In this HTML is a Form with two hidden
 fields: `SAMLResponse` and `RelayState`. You now need to parse the HTML and get
 the content of both fields and save them.
 
 #### Step 3: Get the second login cookie
 Make a `POST` request to `https://login.tuwien.ac.at/auth/postResponse` with
 the following form-encoded data:
+|Name|Content|
+|--|--|
 | SAMLResponse | <the SAMLResponse from Step 2> |
 | RelayState   | <the RelayState from Step 2>   |
 
@@ -83,8 +87,8 @@ With `GET` requests follow the redirects until the server responds with
 200 (OK), starting with the location we got at the end of Step 3.
 
 While following these redirects the server will set you cookie called 
-`TISS_AUTH`. This is the one you ~wanted~ needed all along. Now all you have 
-to do is make requests to the TISS API and send this cookie with it. 
+`TISS_AUTH`. This is the one you ~wanted~ needed all along. Now, all you have 
+to do is make requests to the TISS API and send this cookie with them. 
 
 You did it, you beautiful bastard. 🥳 🎉
 
