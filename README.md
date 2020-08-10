@@ -9,7 +9,7 @@ students of the TU Wien.
 ### Where do you get the data from ?
 Actually, there is an official 
 [TISS REST API](https://tiss.tuwien.ac.at/api/dokumentation). While the API is 
-public (or semi-public, but I will come back to this later), the dokumentation 
+public (or semi-public, but I will come back to this later), the documentation 
 is not, so you need to be able to login to [TISS](https://tiss.tuwien.ac.at/).
 
 If you don't have access to [TISS](https://tiss.tuwien.ac.at/), don't worry as 
@@ -63,10 +63,10 @@ The data we send with that request is form-encoded and there are the following
 fields:
 |Name|Content|
 |--|--|
-| username  | <your TU Wien username>                |
-| password  | <your TU Wien password>                |
-| totp      | <empty>                                |
-| AuthState | <the AuthState we collected in Step 1> |
+| username  | *your TU Wien username*                |
+| password  | *your TU Wien password*                |
+| totp      | *empty*                                |
+| AuthState | *the AuthState we collected in Step 1* |
 
 The server should now respond with HTML. In this HTML is a Form with two hidden
 fields: `SAMLResponse` and `RelayState`. You now need to parse the HTML and get
@@ -77,8 +77,8 @@ Make a `POST` request to `https://login.tuwien.ac.at/auth/postResponse` with
 the following form-encoded data:
 |Name|Content|
 |--|--|
-| SAMLResponse | <the SAMLResponse from Step 2> |
-| RelayState   | <the RelayState from Step 2>   |
+| SAMLResponse | *the SAMLResponse from Step 2* |
+| RelayState   | *the RelayState from Step 2*   |
 
 The server will respond with status 303 (Redirect), save that url.
 
