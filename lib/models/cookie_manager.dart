@@ -14,7 +14,6 @@ class CookieManager {
     if (rawCookies == null || rawCookies == "") return;
 
     List<String> cookies = rawCookies.split(",");
-    print("COOKIE: $rawCookies ($host)");
 
     for (String cookie in cookies) {
       if (!cookie.contains("=")) continue;

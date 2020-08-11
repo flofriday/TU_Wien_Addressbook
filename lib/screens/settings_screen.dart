@@ -7,10 +7,14 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Second Route"),
-        ),
-        body: Center(
+      appBar: AppBar(
+        title: Text("Einstellungen"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Card(
+          child: Padding(
+            padding: EdgeInsets.all(10),
             child: FutureBuilder<SharedPreferences>(
                 future: _prefs, // a previously-obtained Future<String> or null
                 builder: (BuildContext context,
@@ -21,6 +25,7 @@ class SettingsScreen extends StatelessWidget {
                   SharedPreferences prefs = snapshot.data;
 
                   return Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       TextField(
                         decoration: const InputDecoration(
@@ -31,19 +36,23 @@ class SettingsScreen extends StatelessWidget {
                           ..text = prefs.getString('username'),
                         onChanged: (String value) async {
                           await prefs.setString('username', value);
+                          await prefs.remove('tisscookie');
+                          await prefs.remove('tisscookietime');
                           print('usr: $value');
                         },
                       ),
                       TextField(
                         decoration: const InputDecoration(
-                          icon: Icon(Icons.person),
-                          labelText: 'Password',
+                          icon: Icon(Icons.lock),
+                          labelText: 'Passwort',
                         ),
                         obscureText: true,
                         controller: TextEditingController()
                           ..text = prefs.getString('password'),
                         onChanged: (String value) async {
                           await prefs.setString('password', value);
+                          await prefs.remove('tisscookie');
+                          await prefs.remove('tisscookietime');
                           print('paswd: $value');
                         },
                       ),
@@ -56,6 +65,10 @@ class SettingsScreen extends StatelessWidget {
                       )
                     ],
                   );
-                })));
+                }),
+          ),
+        ),
+      ),
+    );
   }
 }

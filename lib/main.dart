@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tu_wien_addressbook/models/tiss_login_manager.dart';
 import 'package:tu_wien_addressbook/screens/settings_screen.dart';
 import 'package:tu_wien_addressbook/widgets/utils.dart';
 import 'package:uri/uri.dart';
@@ -17,20 +18,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TU Addressbook',
+      title: 'TU Addressbuch',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
+        accentColor: Colors.deepOrangeAccent,
         primarySwatch: Colors.blueGrey,
       ),
-      home: MyHomePage(title: 'TU Addressbook'),
+      home: MyHomePage(title: 'TU Addressbuch'),
     );
   }
 }
@@ -104,7 +97,8 @@ class PersonSearch extends SearchDelegate<Person> {
         "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=50&intern=true");
     String apiUri = template.expand({'query': query});
 
-    String cookies = await getCookies();
+    TissLoginManager tissManager = TissLoginManager();
+    String cookies = await tissManager.getCookies();
     var headers = {"Cookie": cookies};
     print("");
     print(headers);

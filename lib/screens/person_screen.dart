@@ -7,6 +7,9 @@ class PersonScreen extends StatelessWidget {
 
   const PersonScreen(this.person);
 
+  static const EdgeInsets cardPadding =
+      EdgeInsets.only(top: 16, left: 16, right: 16);
+
   @override
   Widget build(BuildContext context) {
     // Calculate the number of cards shown
@@ -18,38 +21,31 @@ class PersonScreen extends StatelessWidget {
       cards += person.employee.length;
     }
 
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      constraints: BoxConstraints.expand(),
-      child: ListView.builder(
-        itemCount: cards + 1,
-        itemBuilder: (BuildContext context, int index) {
-          // Show the generell information about a person
-          if (index == 0) {
-            return Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: _PersonInfoCard(person));
-          }
+    return ListView.builder(
+      itemCount: cards + 1,
+      itemBuilder: (BuildContext context, int index) {
+        // Show the generell information about a person
+        if (index == 0) {
+          return Padding(padding: cardPadding, child: _PersonInfoCard(person));
+        }
 
-          // Show the student card if the person is a student
-          if (person.student != null && index == 1) {
-            return Padding(
-                padding: EdgeInsets.only(top: 10), child: Text('Studentcard'));
-          }
+        // Show the student card if the person is a student
+        if (person.student != null && index == 1) {
+          return Padding(padding: cardPadding, child: _StudentCard(person));
+        }
 
-          // Add a padding at the end so that the floating action button
-          // doesn't get in the way of the last card
-          if (index == cards) return Padding(padding: EdgeInsets.only(top: 66));
+        // Add a padding at the end so that the floating action button
+        // doesn't get in the way of the last card
+        if (index == cards) return Padding(padding: EdgeInsets.only(top: 80));
 
-          // Calculate which employee to show with this card
-          int empployeeIndex = index - 1;
-          if (person.student != null) empployeeIndex--;
+        // Calculate which employee to show with this card
+        int empployeeIndex = index - 1;
+        if (person.student != null) empployeeIndex--;
 
-          return Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: _EmployeeCard(person.employee[empployeeIndex]));
-        },
-      ),
+        return Padding(
+            padding: cardPadding,
+            child: _EmployeeCard(person.employee[empployeeIndex]));
+      },
     );
   }
 }
@@ -59,7 +55,6 @@ class _PersonInfoCard extends StatelessWidget {
 
   _PersonInfoCard(this.person);
 
-  // TODO: FIX Crashing if email, or phone is not present
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -119,7 +114,8 @@ class _PersonInfoCard extends StatelessWidget {
                     }),
                     Builder(
                       builder: (BuildContext context) {
-                        if (person.tissUri == null) return Container();
+                        if (person.tissUri == null || person.employee == null)
+                          return Container();
 
                         return FlatButton.icon(
                           icon: Icon(Icons.school),
@@ -266,6 +262,32 @@ class _EmployeeCard extends StatelessWidget {
               },
             ),
           ],
+        ),
+      ],
+    ));
+  }
+}
+
+class _StudentCard extends StatelessWidget {
+  final Person person;
+
+  _StudentCard(this.person);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        _Info(
+          title: person.gender == "W" ? "Studentin" : "Student",
+          subtitle: "seit ${person.student.getMatriculationYear()}",
+        ),
+        _Info(
+          title: "Matrikelnummer",
+          subtitle: person.student.matriculationNumber,
         ),
       ],
     ));

@@ -90,15 +90,25 @@ class Person {
   }
 
   String getShortDescription() {
+    String description = "";
+
     if (this.employee != null && this.student != null) {
-      return "Student and Employee";
+      description = "Student and Employee";
     } else if (this.employee != null) {
-      return "Employee";
+      description = "Employee";
     } else if (this.student != null) {
-      return "Student";
+      description = "Student";
     } else {
-      return "unknown";
+      description = "unknown";
     }
+
+    if (this.employee != null) {
+      for (Employee e in this.employee) {
+        description += ", ${e.function}";
+      }
+    }
+
+    return description;
   }
 
   CircleAvatar getCircleAvatar(double radius) {
@@ -128,6 +138,12 @@ class Student {
 
   factory Student.fromJson(Map<String, dynamic> json) =>
       _$StudentFromJson(json);
+
+  String getMatriculationYear() {
+    int jj = int.parse(matriculationNumber[1] + matriculationNumber[2]);
+    if (jj < 40) return "20$jj";
+    return "19$jj";
+  }
 }
 
 @JsonSerializable(nullable: true)
