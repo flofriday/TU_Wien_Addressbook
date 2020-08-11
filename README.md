@@ -4,6 +4,13 @@ students of the TU Wien.
 
 ![Screenshot](screenshot.png)
 
+## Todo for 1.0.0
+* Improve loading speeds
+* Improve settings UI
+* Add icon
+* Redo Homescreen UI
+* Improve first experience (no Max Mustermann)
+
 ## Frequently asked Question
 
 ### Where do you get the data from ?
