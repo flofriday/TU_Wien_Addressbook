@@ -9,6 +9,10 @@ API, the app itself is not official!
 
 ## Todo for 1.0.0
 * Improve first experience (no Max Mustermann)
+* Add loading idicator
+* Improve Loading speeds even more
+* Add selectors if multiple emails, websites etc are available
+* Rename everything to german to be consistent
 
 ## Frequently asked Question
 
