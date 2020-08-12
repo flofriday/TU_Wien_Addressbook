@@ -8,7 +8,6 @@ students of the TU Wien.
 API, the app itself is not official!
 
 ## Todo for 1.0.0
-* Add icon
 * Improve first experience (no Max Mustermann)
 
 ## Frequently asked Question
