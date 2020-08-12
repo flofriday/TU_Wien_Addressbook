@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tu_wien_adressbook">
+    package="com.example.tu_wien_addressbook">
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="tu_wien_adressbook"
+        android:label="TU Addressbook"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

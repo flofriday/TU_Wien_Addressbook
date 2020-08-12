@@ -4,10 +4,11 @@ students of the TU Wien.
 
 ![Screenshot](screenshot.png)
 
+**Warning :** While the data this app displays comes from an official TU Wien
+API, the app itself is not official!
+
 ## Todo for 1.0.0
-* Improve settings UI
 * Add icon
-* Redo Homescreen UI
 * Improve first experience (no Max Mustermann)
 
 ## Frequently asked Question

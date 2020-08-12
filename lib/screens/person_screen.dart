@@ -8,7 +8,7 @@ class PersonScreen extends StatelessWidget {
   const PersonScreen(this.person);
 
   static const EdgeInsets cardPadding =
-      EdgeInsets.only(top: 16, left: 16, right: 16);
+      EdgeInsets.only(top: 10, left: 10, right: 10);
 
   @override
   Widget build(BuildContext context) {

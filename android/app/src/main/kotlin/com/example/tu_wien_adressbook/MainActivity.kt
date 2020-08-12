@@ -1,4 +1,4 @@
-package com.example.tu_wien_adressbook
+package com.example.tu_wien_addressbook
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

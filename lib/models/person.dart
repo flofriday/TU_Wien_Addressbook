@@ -140,9 +140,11 @@ class Student {
       _$StudentFromJson(json);
 
   String getMatriculationYear() {
-    int jj = int.parse(matriculationNumber[1] + matriculationNumber[2]);
-    if (jj < 40) return "20$jj";
-    return "19$jj";
+    String jjString = matriculationNumber[1] + matriculationNumber[2];
+    int jj = int.parse(jjString);
+    print("20$jjString");
+    if (jj < 40) return "20$jjString";
+    return "19$jjString";
   }
 }
 
