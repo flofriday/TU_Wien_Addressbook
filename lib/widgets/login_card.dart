@@ -61,7 +61,12 @@ class LoginCard extends StatelessWidget {
                       Padding(
                           padding: EdgeInsets.symmetric(vertical: 16),
                           child: Text(
-                              "Informationen über Studenten werden von TISS geschützt und können deswegen nur von eingeloggten Usern gesehen werden.")),
+                              "Informationen über Studenten werden von TISS " +
+                                  "geschützt und können deswegen nur von " +
+                                  "eingeloggten Usern gesehen werden.\n\n" +
+                                  "Deine Logindaten werden nur lokal auf " +
+                                  "diesem Gerät gespeichert und an TISS zur " +
+                                  "Authentifizierung gesendet.")),
                     ],
                   );
                 }),

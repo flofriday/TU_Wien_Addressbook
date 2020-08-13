@@ -36,10 +36,6 @@ class OpenSourceCard extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
-            indent: 16,
-            endIndent: 16,
-          ),
           ButtonBar(
             alignment: MainAxisAlignment.start,
             children: [
