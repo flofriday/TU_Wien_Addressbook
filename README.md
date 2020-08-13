@@ -1,11 +1,18 @@
 # TU Wien Addressbook
-A very simple addressbook app for Android and iOS to search employees and 
-students of the TU Wien.
+A very simple Android and iOS App to search [TU Wien](https://www.tuwien.at/en/) employees and students.
 
 ![Screenshot](screenshot.png)
 
+[Download](https://github.com/flofriday/TU_Wien_Addressbook/releases/latest) the latest release for Android.
+
 **Warning :** While the data this app displays comes from an official TU Wien
 API, the app itself is not official!
+
+## Build it yourself
+1) [Install Flutter](https://flutter.dev/docs/get-started/install)
+2) Clone this repository, or download it.
+3) Connect your phone to your computer.
+4) Run `flutter install` in your terminal (you must first change into the directory of the repository).
 
 ## Todo for 1.0.0
 * Add loading idicator
