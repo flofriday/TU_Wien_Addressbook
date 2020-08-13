@@ -1,35 +1,31 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:tu_wien_addressbook/models/tiss_login_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tu_wien_addressbook/screens/person_search.dart';
 import 'package:tu_wien_addressbook/screens/settings_screen.dart';
-import 'package:tu_wien_addressbook/widgets/utils.dart';
-import 'package:uri/uri.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
-import 'package:tu_wien_addressbook/models/tiss.dart';
 import 'package:tu_wien_addressbook/screens/person_screen.dart';
-import 'package:tu_wien_addressbook/widgets/person_entry.dart';
-import 'package:http/http.dart' as http;
 
-void main() => runApp(MyApp());
+void main() => runApp(App());
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TU Addressbuch',
       theme: ThemeData(
-        accentColor: Colors.deepOrangeAccent,
-        primarySwatch: Colors.blueGrey,
+        accentColor: Colors.deepPurple,
+        primarySwatch: Colors.deepOrange,
       ),
-      home: MyHomePage(title: 'TU Addressbuch'),
+      home: MainPage(title: 'TU Addressbuch'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class MainPage extends StatefulWidget {
+  MainPage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -43,11 +39,12 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  Person person = Person.example();
+class _MainPageState extends State<MainPage> {
+  Person person;
+  Future<SharedPreferences> futurePrefs = SharedPreferences.getInstance();
 
   @override
   Widget build(BuildContext context) {
@@ -74,101 +71,49 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: PersonScreen(person),
+      body: Builder(builder: (BuildContext context) {
+        if (person != null) {
+          return PersonScreen(person);
+        }
+
+        // No person in memory so load one from shared preferences
+        return FutureBuilder<SharedPreferences>(
+            future: futurePrefs,
+            builder: (BuildContext context,
+                AsyncSnapshot<SharedPreferences> snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                  child: Text('Lade...'),
+                );
+              }
+
+              SharedPreferences prefs = snapshot.data;
+
+              try {
+                this.person = Person.fromJson(
+                    jsonDecode(prefs.getString("currentperson")));
+                return PersonScreen(person);
+              } catch (e) {
+                print(e);
+                return Center(
+                    child: Text('Start searching a person you know...'));
+              }
+            });
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           Person p =
               await showSearch(context: context, delegate: PersonSearch());
           if (p == null) return;
           setState(() {
-            person = p;
+            this.person = p;
           });
+          SharedPreferences prefs = await futurePrefs;
+          String json = jsonEncode(person.toJson());
+          await prefs.setString("currentperson", json);
         },
         child: Icon(Icons.search),
-        //backgroundColor: Colors.deepOrange,
       ),
     );
-  }
-}
-
-class PersonSearch extends SearchDelegate<Person> {
-  Future<http.Response> _makeRequest(String query) async {
-    var template = new UriTemplate(
-        "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=50&intern=true");
-    String apiUri = template.expand({'query': query});
-
-    TissLoginManager tissManager = TissLoginManager();
-    String cookies = await tissManager.getCookies();
-    var headers = {"Cookie": cookies};
-    print("");
-    print(headers);
-    return await http.get(apiUri, headers: headers);
-  }
-
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-        icon: Icon(Icons.clear),
-        onPressed: () {
-          query = '';
-        },
-      ),
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.arrow_back),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    Future<http.Response> response = _makeRequest(query);
-
-    return FutureBuilder<http.Response>(
-        future: response,
-        builder: (BuildContext context, AsyncSnapshot<http.Response> snapshot) {
-          // Check if the data is ready
-          if (!snapshot.hasData) {
-            return Center(child: Text("Loading..."));
-          }
-
-          // Check if the server answered successfully
-          http.Response resp = snapshot.data;
-          if (resp.statusCode != 200) {
-            return Center(child: Text("Failed to load data from the server"));
-          }
-
-          // Decode the json
-          var map = jsonDecode(resp.body);
-          Tiss data = Tiss.fromJson(map);
-
-          // Show a error if there are no results
-          if (data.results.length == 0) {
-            return Center(child: Text("No persons found. 🤬"));
-          }
-
-          return ListView.builder(
-              itemCount: data.results.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  child: PersonEntry(data.results[index]),
-                  onTap: () {
-                    close(context, data.results[index]);
-                  },
-                );
-              });
-        });
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    return Center(child: Text('Suggestions are not yet implemented.'));
   }
 }

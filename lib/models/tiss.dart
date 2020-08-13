@@ -15,4 +15,6 @@ class Tiss {
   Tiss();
 
   factory Tiss.fromJson(Map<String, dynamic> json) => _$TissFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TissToJson(this);
 }

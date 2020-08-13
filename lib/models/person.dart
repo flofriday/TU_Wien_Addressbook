@@ -40,13 +40,9 @@ class Person {
 
   Person();
 
-  Person.example() {
-    firstName = "Max";
-    lastName = "Mustermann";
-    email = "max.mustermann@example.com";
-  }
-
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PersonToJson(this);
 
   String getNameWithTitles() {
     String name = this.firstName + " " + this.lastName;
@@ -139,6 +135,8 @@ class Student {
   factory Student.fromJson(Map<String, dynamic> json) =>
       _$StudentFromJson(json);
 
+  Map<String, dynamic> toJson() => _$StudentToJson(this);
+
   String getMatriculationYear() {
     String jjString = matriculationNumber[1] + matriculationNumber[2];
     int jj = int.parse(jjString);
@@ -166,6 +164,8 @@ class Employee {
 
   factory Employee.fromJson(Map<String, dynamic> json) =>
       _$EmployeeFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EmployeeToJson(this);
 }
 
 @JsonSerializable(nullable: true)
@@ -180,6 +180,8 @@ class Organisation {
 
   factory Organisation.fromJson(Map<String, dynamic> json) =>
       _$OrganisationFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OrganisationToJson(this);
 
   String getTissUrl() {
     return "https://tiss.tuwien.ac.at/adressbuch/adressbuch/orgeinheit/" +
@@ -197,6 +199,8 @@ class Room {
   Room();
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RoomToJson(this);
 
   // Return a link to https://tuw-maps.tuwien.ac.at which highlights the room.
   // Note to reader: it took me f***ing 30mins to figure out where I could get
@@ -225,6 +229,8 @@ class Address {
   factory Address.fromJson(Map<String, dynamic> json) =>
       _$AddressFromJson(json);
 
+  Map<String, dynamic> toJson() => _$AddressToJson(this);
+
   String toString() {
     String text = "$street, $zipCode $city";
     if (country != 'AT') text += " ($country)";
@@ -242,4 +248,6 @@ class Website {
 
   factory Website.fromJson(Map<String, dynamic> json) =>
       _$WebsiteFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WebsiteToJson(this);
 }
