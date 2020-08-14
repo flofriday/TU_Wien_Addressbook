@@ -9,6 +9,8 @@ import 'package:uri/uri.dart';
 import 'package:http/http.dart' as http;
 
 class PersonSearch extends SearchDelegate<Person> {
+  TissLoginManager tissManager = TissLoginManager();
+
   PersonSearch() : super(searchFieldLabel: "Suche");
 
   Future<http.Response> _makeRequest(String query) async {
@@ -16,12 +18,11 @@ class PersonSearch extends SearchDelegate<Person> {
         "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=50&intern=true");
     String apiUri = template.expand({'query': query});
 
-    TissLoginManager tissManager = TissLoginManager();
     String cookies = await tissManager.getCookies();
     var headers = {"Cookie": cookies};
-    print("");
     print(headers);
-    return await http.get(apiUri, headers: headers);
+    var res = await http.get(apiUri, headers: headers);
+    return res;
   }
 
   @override

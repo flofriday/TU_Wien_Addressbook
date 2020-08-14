@@ -89,13 +89,16 @@ class Person {
     String description = "";
 
     if (this.employee != null && this.student != null) {
-      description = "Student and Employee";
+      description = this.gender == "W"
+          ? "Studentin und Mitarbeiterin"
+          : "Student und Mitarbeiter";
     } else if (this.employee != null) {
-      description = "Employee";
+      description = this.gender == "W" ? "Mitarbeiterin" : "Mitarbeiter";
     } else if (this.student != null) {
-      description = "Student";
+      description = this.gender == "W" ? "Studentin" : "Student";
+      description += ", seit ${this.student.getMatriculationYear()}";
     } else {
-      description = "unknown";
+      description = "keine Information";
     }
 
     if (this.employee != null) {
@@ -140,7 +143,6 @@ class Student {
   String getMatriculationYear() {
     String jjString = matriculationNumber[1] + matriculationNumber[2];
     int jj = int.parse(jjString);
-    print("20$jjString");
     if (jj < 40) return "20$jjString";
     return "19$jjString";
   }

@@ -16,7 +16,6 @@ API, the app itself is not official!
 
 ## Todo for 1.0.0
 * Add offline warning
-* Improve Loading speeds even more
 * Add selectors if multiple emails, websites etc are available
 
 ## Frequently asked Question

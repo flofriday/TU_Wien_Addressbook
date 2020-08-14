@@ -2,21 +2,45 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tu_wien_addressbook/models/cookie_manager.dart';
 
-class MyRequest extends http.Request {
+/// A custom request class as the default http.Request class doesn't allow
+/// me to set headers in the constructor.
+class _MyRequest extends http.Request {
   @override
   Map<String, String> headers;
 
-  MyRequest(String method, Uri url, {Map<String, String> headers})
+  /// A constructor similar to http.Request but, that allows you to set headers.
+  _MyRequest(String method, Uri url, {Map<String, String> headers})
       : this.headers = headers,
         super(method, url);
 }
 
+/// A class to load the necessary TISS cookies
+///
+/// Note: Instances of this class should be short lived (no longer than 10min),
+/// because objects only go through the login process once they are constructed
+/// and than save the result for performance reasons.
+///
+/// This class makes heavy use of shared preferences, and can only log in if
+/// there is a 'username' and 'password' field in the shared prefrences with
+/// valid credentials. Furthermore, this class also saves the cookie in the
+/// shared preferences with the key 'tisscookie' and a timestamp
+/// (in milliseconds since epoche) with the key 'tisscookietime'.
 class TissLoginManager {
-  TissLoginManager();
+  Future<SharedPreferences> futurePrefs = SharedPreferences.getInstance();
+  Future<String> tissCookies;
+
+  TissLoginManager() {
+    print("Loading cookies...");
+    tissCookies = _loadCookies();
+  }
 
   Future<String> getCookies() async {
+    return tissCookies;
+  }
+
+  Future<String> _loadCookies() async {
     // STEP 0: Check if there are existing cookies
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await futurePrefs;
     String savedTissCookie = prefs.getString('tisscookie');
     int rawDateTime = prefs.getInt('tisscookietime');
 
@@ -53,7 +77,7 @@ class TissLoginManager {
     while (true) {
       var headers = {"Cookie": cookieJar.getForUrl(Uri.parse(sessionUrl))};
       http.BaseRequest req =
-          MyRequest('GET', Uri.parse(sessionUrl), headers: headers);
+          _MyRequest('GET', Uri.parse(sessionUrl), headers: headers);
       req.followRedirects = false;
       resp = await client.send(req);
       cookieJar.addFromResponse(resp);
@@ -129,7 +153,7 @@ class TissLoginManager {
       'SAMLResponse': samlResponse,
       'RelayState': relayState,
     };
-    http.Request request = MyRequest('POST', Uri.parse(url), headers: headers);
+    http.Request request = _MyRequest('POST', Uri.parse(url), headers: headers);
     request.followRedirects = false;
     request.bodyFields = requestBody;
     http.StreamedResponse streamResponse = await client.send(request);
@@ -145,7 +169,7 @@ class TissLoginManager {
     while (true) {
       var headers = {"Cookie": cookieJar.getForUrl(Uri.parse(sessionUrl))};
       http.BaseRequest req =
-          MyRequest('GET', Uri.parse(sessionUrl), headers: headers);
+          _MyRequest('GET', Uri.parse(sessionUrl), headers: headers);
       req.followRedirects = false;
       resp = await client.send(req);
       cookieJar.addFromResponse(resp);
