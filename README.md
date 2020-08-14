@@ -12,7 +12,9 @@ API, the app itself is not official!
 1) [Install Flutter](https://flutter.dev/docs/get-started/install)
 2) Clone this repository, or download it.
 3) Connect your phone to your computer.
-4) Run `flutter install` in your terminal (you must first change into the directory of the repository).
+4) Open the repository in your terminal.
+5) For Android run: `flutter build apk --release && flutter install`<br>
+For iOS I asume: `flutter build ios --release && flutter install`, however just the build command ends in an error because I don't have an Apple certificate.
 
 ## Todo for 1.0.0
 * Add offline warning
