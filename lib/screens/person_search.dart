@@ -55,7 +55,12 @@ class PersonSearch extends SearchDelegate<Person> {
         builder: (BuildContext context, AsyncSnapshot<http.Response> snapshot) {
           // Check if the data is ready
           if (!snapshot.hasData) {
-            return Center(child: Text("Lade..."));
+            return Center(
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                CircularProgressIndicator(value: null),
+                //Text("Lade..."),
+              ]),
+            );
           }
 
           // Check if the server answered successfully

@@ -15,7 +15,6 @@ API, the app itself is not official!
 4) Run `flutter install` in your terminal (you must first change into the directory of the repository).
 
 ## Todo for 1.0.0
-* Add loading idicator
 * Add offline warning
 * Improve Loading speeds even more
 * Add selectors if multiple emails, websites etc are available
