@@ -8,13 +8,12 @@ class PersonEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: ListTile(
-      leading: person.getCircleAvatar(28),
+    return ListTile(
+      leading: person.getCircleAvatar(20),
       title: Text(
         "${person.firstName} ${person.lastName}",
       ),
       subtitle: Text(person.getShortDescription()),
-    ));
+    );
   }
 }

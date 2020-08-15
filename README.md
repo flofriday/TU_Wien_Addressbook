@@ -17,8 +17,10 @@ API, the app itself is not official!
 For iOS I asume: `flutter build ios --release && flutter install`, however just the build command ends in an error because I don't have an Apple certificate.
 
 ## Todo for 1.0.0
+* Improve README
 * Add offline warning
 * Add selectors if multiple emails, websites etc are available
+* Better starting screen
 
 ## Frequently asked Question
 
