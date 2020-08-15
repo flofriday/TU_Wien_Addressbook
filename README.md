@@ -19,8 +19,8 @@ For iOS I asume: `flutter build ios --release && flutter install`, however just 
 ## Todo for 1.0.0
 * Improve README
 * Add offline warning
-* Add selectors if multiple emails, websites etc are available
 * Better starting screen
+* Add suggestions
 
 ## Frequently asked Question
 

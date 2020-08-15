@@ -71,30 +71,74 @@ class EmployeeCard extends StatelessWidget {
             Builder(builder: (BuildContext context) {
               if (employee.phoneNumbers == null) return Container();
 
-              // TODO: also display the button if there is more than one phone
-              // and open a popup if clicked
-              if (employee.phoneNumbers.length != 1) return Container();
-
               return FlatButton.icon(
                 icon: Icon(Icons.phone),
                 label: const Text('TEL'),
-                onPressed: () {
-                  launchPhone(employee.phoneNumbers[0]);
+                onPressed: () async {
+                  // Launch the phone app if there is just one numner
+                  if (employee.phoneNumbers.length == 1) {
+                    launchPhone(employee.phoneNumbers[0]);
+                    return;
+                  }
+
+                  // Open a popup if there are multiple numbers
+                  String choice = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SimpleDialog(
+                            title: const Text('Wähle eine Webseite'),
+                            children: employee.phoneNumbers.map((phone) {
+                              return SimpleDialogOption(
+                                onPressed: () {
+                                  Navigator.pop(context, phone);
+                                },
+                                child: Text(phone),
+                              );
+                            }).toList());
+                      });
+
+                  // Do nothing if the user didn't selected anything
+                  if (choice == null) return;
+
+                  // Launch the phone
+                  launchPhone(choice);
                 },
               );
             }),
             Builder(builder: (BuildContext context) {
               if (employee.websites == null) return Container();
 
-              // TODO: also display the button if there is more than one website
-              // and open a popup if clicked
-              if (employee.websites.length != 1) return Container();
-
               return FlatButton.icon(
                 icon: Icon(Icons.open_in_browser),
                 label: const Text('WEB'),
-                onPressed: () {
-                  launchInBrowser(employee.websites[0].uri);
+                onPressed: () async {
+                  // Launch the phone app if there is just one numner
+                  if (employee.websites.length == 1) {
+                    launchInBrowser(employee.websites[0].uri);
+                    return;
+                  }
+
+                  // Open a popup if there are multiple numbers
+                  String choice = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SimpleDialog(
+                            title: const Text('Wähle eine Nummer'),
+                            children: employee.websites.map((website) {
+                              return SimpleDialogOption(
+                                onPressed: () {
+                                  Navigator.pop(context, website.uri);
+                                },
+                                child: Text(website.uri),
+                              );
+                            }).toList());
+                      });
+
+                  // Do nothing if the user didn't selected anything
+                  if (choice == null) return;
+
+                  // Launch the phone
+                  launchInBrowser(choice);
                 },
               );
             }),
