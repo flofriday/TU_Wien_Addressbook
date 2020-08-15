@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tu_wien_addressbook/widgets/utils.dart';
 
 class OpenSourceCard extends StatelessWidget {
@@ -10,7 +9,7 @@ class OpenSourceCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: FaIcon(FontAwesomeIcons.osi),
+            leading: Icon(Icons.public),
             title: Text("Open Source"),
             subtitle: Text("made with ❤️ by flofriday"),
           ),

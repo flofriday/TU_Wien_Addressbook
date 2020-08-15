@@ -39,11 +39,6 @@ dependencies:
   # Save simple key-value pairs on the device
   shared_preferences: '>=0.5.0 <2.0.0'
 
-  # Add some aditional icons that are not part of material icons
-  font_awesome_flutter: ^8.8.1
-
-
-
 
 
 dev_dependencies:

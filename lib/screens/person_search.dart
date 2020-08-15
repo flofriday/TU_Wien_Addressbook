@@ -17,7 +17,12 @@ class PersonSearch extends SearchDelegate<Person> {
   bool _femaleFilter = false;
   bool _maleFilter = false;
 
-  PersonSearch() : super(searchFieldLabel: "Suche");
+  PersonSearch()
+      : super(
+          searchFieldLabel: "Suche",
+          keyboardType: TextInputType.text,
+          textInputAction: TextInputAction.search,
+        );
 
   Future<http.Response> _makeRequest(String query) async {
     var template = new UriTemplate(
@@ -198,11 +203,17 @@ class PersonSearch extends SearchDelegate<Person> {
         builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
           if (!snapshot.hasData) return Container();
 
+          // Filter the suggestion to match the query
           List<String> data = snapshot.data;
           data = data
               .where((element) =>
                   element.toLowerCase().contains(query.toLowerCase().trim()))
               .toList();
+
+          // Remove duplicates
+          if (query.trim().isNotEmpty) {
+            data = Set<String>.from(data).toList();
+          }
 
           return ListView.separated(
               itemCount: data.length,

@@ -19,7 +19,10 @@ class SuggestionManager {
 
     // Don't add the new suggestion if it is empty or the same as the last
     value = value.trim();
-    if (value.isEmpty || value.toLowerCase() == current.first ?? "") {
+    if (value.isEmpty) {
+      return;
+    }
+    if (current.isNotEmpty && value == current[0]) {
       return;
     }
 

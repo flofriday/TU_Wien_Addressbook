@@ -16,9 +16,10 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'TU Addressbuch',
       theme: ThemeData(
-        accentColor: Colors.deepPurple,
-        primarySwatch: Colors.deepOrange,
-      ),
+          accentColor: Colors.blueGrey,
+          primarySwatch: Colors.blueGrey,
+          scaffoldBackgroundColor: Colors.blueGrey[50]),
+      //theme: addressTheme,
       home: MainPage(title: 'TU Addressbuch'),
     );
   }
