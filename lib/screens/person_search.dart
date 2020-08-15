@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
+import 'package:tu_wien_addressbook/models/suggestion_manager.dart';
 import 'package:tu_wien_addressbook/models/tiss.dart';
 import 'package:tu_wien_addressbook/models/tiss_login_manager.dart';
 import 'package:tu_wien_addressbook/widgets/person_entry.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 class PersonSearch extends SearchDelegate<Person> {
   TissLoginManager _tissManager = TissLoginManager();
+  SuggestionManager _suggestionManager = SuggestionManager();
   bool _employeeFilter = false;
   bool _studentFilter = false;
   bool _femaleFilter = false;
@@ -36,6 +38,7 @@ class PersonSearch extends SearchDelegate<Person> {
         icon: Icon(Icons.clear),
         onPressed: () {
           query = '';
+          showSuggestions(context);
         },
       ),
     ];
@@ -54,6 +57,7 @@ class PersonSearch extends SearchDelegate<Person> {
   @override
   Widget buildResults(BuildContext context) {
     Future<http.Response> response = _makeRequest(query);
+    _suggestionManager.addSuggestion(query);
 
     return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
@@ -186,6 +190,35 @@ class PersonSearch extends SearchDelegate<Person> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    Future<List<String>> futureSuggestions =
+        _suggestionManager.getSuggestions();
+
+    return FutureBuilder(
+        future: futureSuggestions,
+        builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+          if (!snapshot.hasData) return Container();
+
+          List<String> data = snapshot.data;
+          data = data
+              .where((element) =>
+                  element.toLowerCase().contains(query.toLowerCase().trim()))
+              .toList();
+
+          return ListView.separated(
+              itemCount: data.length,
+              separatorBuilder: (context, index) => Divider(
+                    height: 4,
+                  ),
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  leading: Icon(Icons.access_time),
+                  title: Text(data[index]),
+                  onTap: () {
+                    query = data[index];
+                    showResults(context);
+                  },
+                );
+              });
+        });
   }
 }

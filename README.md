@@ -20,7 +20,7 @@ For iOS I asume: `flutter build ios --release && flutter install`, however just 
 * Improve README
 * Add offline warning
 * Better starting screen
-* Add suggestions
+* Better Theming
 
 ## Frequently asked Question
 

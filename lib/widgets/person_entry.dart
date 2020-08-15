@@ -9,11 +9,15 @@ class PersonEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      isThreeLine: false,
       leading: person.getCircleAvatar(20),
       title: Text(
         "${person.firstName} ${person.lastName}",
       ),
-      subtitle: Text(person.getShortDescription()),
+      subtitle: Text(
+        person.getShortDescription(),
+        maxLines: 1,
+      ),
     );
   }
 }
