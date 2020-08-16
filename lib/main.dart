@@ -20,6 +20,7 @@ class App extends StatelessWidget {
           primarySwatch: Colors.blueGrey,
           scaffoldBackgroundColor: Colors.blueGrey[50]),
       //theme: addressTheme,
+      debugShowCheckedModeBanner: false,
       home: MainPage(title: 'TU Addressbuch'),
     );
   }
