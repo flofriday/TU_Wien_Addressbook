@@ -14,7 +14,7 @@ class OpenSourceCard extends StatelessWidget {
             subtitle: Text("made with ❤️ by flofriday"),
           ),
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.symmetric(horizontal: 16),
             child: RichText(
               textAlign: TextAlign.start,
               text: TextSpan(

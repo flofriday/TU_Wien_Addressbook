@@ -97,7 +97,7 @@ class _MainPageState extends State<MainPage> {
               } catch (e) {
                 print(e);
                 return Center(
-                    child: Text('Start searching a person you know...'));
+                    child: Text('Suche eine Person die du kennst...'));
               }
             });
       }),

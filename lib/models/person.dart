@@ -70,7 +70,7 @@ class Person {
   }
 
   String getTissUrl() {
-    if (this.pictureUri != null) {
+    if (this.tissUri != null) {
       return "https://tiss.tuwien.ac.at" + this.tissUri;
     }
 
