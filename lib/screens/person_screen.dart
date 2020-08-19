@@ -14,42 +14,56 @@ class PersonScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Calculate the number of cards shown
-    int cards = 1;
-    if (person.student != null) {
-      cards++;
-    }
-    if (person.employee != null) {
-      cards += person.employee.length;
-    }
-
-    return ListView.builder(
-      itemCount: cards + 1,
-      itemBuilder: (BuildContext context, int index) {
-        // Show the generell information about a person
-        if (index == 0) {
-          return Padding(
-              padding: EdgeInsets.only(left: 10, right: 10, top: 30),
-              child: PersonInfoCard(person));
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text("${person.firstName} ${person.lastName}"),
+      ),
+      body: Builder(builder: (BuildContext context) {
+        // Calculate the number of cards shown
+        int cards = 1;
+        if (person.student != null) {
+          cards++;
+        }
+        if (person.employee != null) {
+          cards += person.employee.length;
         }
 
-        // Show the student card if the person is a student
-        if (person.student != null && index == 1) {
-          return Padding(padding: cardPadding, child: StudentCard(person));
-        }
+        return ListView.builder(
+          itemCount: cards + 1,
+          itemBuilder: (BuildContext context, int index) {
+            // Show the generell information about a person
+            if (index == 0) {
+              return Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 30),
+                  child: PersonInfoCard(person));
+            }
 
-        // Add a padding at the end so that the floating action button
-        // doesn't get in the way of the last card
-        if (index == cards) return Padding(padding: EdgeInsets.only(top: 80));
+            // Show the student card if the person is a student
+            if (person.student != null && index == 1) {
+              return Padding(padding: cardPadding, child: StudentCard(person));
+            }
 
-        // Calculate which employee to show with this card
-        int empployeeIndex = index - 1;
-        if (person.student != null) empployeeIndex--;
+            // Add a padding at the end so that the floating action button
+            // doesn't get in the way of the last card
+            if (index == cards)
+              return Padding(padding: EdgeInsets.only(top: 80));
 
-        return Padding(
-            padding: cardPadding,
-            child: EmployeeCard(person.employee[empployeeIndex]));
-      },
+            // Calculate which employee to show with this card
+            int empployeeIndex = index - 1;
+            if (person.student != null) empployeeIndex--;
+
+            return Padding(
+                padding: cardPadding,
+                child: EmployeeCard(person.employee[empployeeIndex]));
+          },
+        );
+      }),
     );
   }
 }

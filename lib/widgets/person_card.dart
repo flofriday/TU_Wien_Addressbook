@@ -87,7 +87,11 @@ class PersonInfoCard extends StatelessWidget {
           top: .0,
           left: .0,
           right: .0,
-          child: Center(child: person.getCircleAvatar(100)),
+          child: Center(
+              child: Material(
+                  borderRadius: BorderRadius.circular(100),
+                  elevation: 4,
+                  child: person.getCircleAvatar(100))),
         )
       ],
     );

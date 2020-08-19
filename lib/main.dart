@@ -73,7 +73,8 @@ class _MainPageState extends State<MainPage> {
           )
         ],
       ),
-      body: Builder(builder: (BuildContext context) {
+      body: HomeScreen(),
+      /*body: Builder(builder: (BuildContext context) {
         if (person != null) {
           return PersonScreen(person);
         }
@@ -101,8 +102,8 @@ class _MainPageState extends State<MainPage> {
                     child: Text('Suche eine Person die du kennst...'));
               }
             });
-      }),
-      floatingActionButton: FloatingActionButton(
+      }),*/
+      /*floatingActionButton: FloatingActionButton(
         onPressed: () async {
           Person p =
               await showSearch(context: context, delegate: PersonSearch());
@@ -115,6 +116,57 @@ class _MainPageState extends State<MainPage> {
           await prefs.setString("currentperson", json);
         },
         child: Icon(Icons.search),
+      ),*/
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(padding: EdgeInsets.only(top: 60)),
+          //Expanded(child: Container()),
+          Center(
+            child: Text("Suche", style: Theme.of(context).textTheme.headline3),
+          ),
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: GestureDetector(
+              onTap: () {
+                showSearch(context: context, delegate: PersonSearch());
+              },
+              child: Card(
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.search,
+                        size: 18,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10),
+                      ),
+                      Text(
+                        "Studenten, Angetellte",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Expanded(child: Container()),
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: Text("Made with ❤️ by flofriday"),
+          ),
+        ],
       ),
     );
   }
