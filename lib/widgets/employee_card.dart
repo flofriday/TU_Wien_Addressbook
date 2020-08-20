@@ -86,7 +86,7 @@ class EmployeeCard extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return SimpleDialog(
-                            title: const Text('Wähle eine Webseite'),
+                            title: const Text('Wähle eine Nummer'),
                             children: employee.phoneNumbers.map((phone) {
                               return SimpleDialogOption(
                                 onPressed: () {
@@ -123,7 +123,7 @@ class EmployeeCard extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return SimpleDialog(
-                            title: const Text('Wähle eine Nummer'),
+                            title: const Text('Wähle eine Website'),
                             children: employee.websites.map((website) {
                               return SimpleDialogOption(
                                 onPressed: () {

@@ -16,9 +16,10 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'TU Addressbuch',
       theme: ThemeData(
-          accentColor: Colors.blueGrey,
-          primarySwatch: Colors.blueGrey,
-          scaffoldBackgroundColor: Colors.blueGrey[50]),
+        accentColor: Colors.blueGrey,
+        primarySwatch: Colors.blueGrey,
+        scaffoldBackgroundColor: Colors.blueGrey[50],
+      ),
       //theme: addressTheme,
       debugShowCheckedModeBanner: false,
       home: MainPage(title: 'TU Addressbuch'),
@@ -128,40 +129,42 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Padding(padding: EdgeInsets.only(top: 60)),
-          //Expanded(child: Container()),
+          //Padding(padding: EdgeInsets.only(top: 100)),
+          Expanded(child: Container()),
           Center(
             child: Text("Suche", style: Theme.of(context).textTheme.headline3),
           ),
           Padding(
             padding: EdgeInsets.all(16),
-            child: GestureDetector(
-              onTap: () {
+            child: RaisedButton(
+              color: Theme.of(context).cardColor,
+              onPressed: () {
                 showSearch(context: context, delegate: PersonSearch());
               },
-              child: Card(
-                child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.search,
-                        size: 18,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10),
-                      ),
-                      Text(
-                        "Studenten, Angetellte",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ],
-                  ),
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      size: 24,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                    ),
+                    Text(
+                      "Studenten, Angetellte",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-          Expanded(child: Container()),
+          Expanded(
+            child: Container(),
+            flex: 2,
+          ),
           Padding(
             padding: EdgeInsets.all(8),
             child: Text("Made with ❤️ by flofriday"),

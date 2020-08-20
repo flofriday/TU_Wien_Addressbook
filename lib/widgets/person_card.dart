@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
+import 'package:tu_wien_addressbook/screens/image_screen.dart';
 import 'package:tu_wien_addressbook/widgets/simple_tile.dart';
 import 'package:tu_wien_addressbook/widgets/utils.dart';
 
@@ -88,10 +89,23 @@ class PersonInfoCard extends StatelessWidget {
           left: .0,
           right: .0,
           child: Center(
-              child: Material(
-                  borderRadius: BorderRadius.circular(100),
-                  elevation: 4,
-                  child: person.getCircleAvatar(100))),
+            child: Material(
+              borderRadius: BorderRadius.circular(100),
+              elevation: 4,
+              child: GestureDetector(
+                child: person.getCircleAvatar(100),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ImageScreen(person.getPictureUrl(),
+                          "${person.firstName} ${person.lastName}"),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
         )
       ],
     );

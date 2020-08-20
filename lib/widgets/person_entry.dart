@@ -10,7 +10,7 @@ class PersonEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       isThreeLine: false,
-      leading: person.getCircleAvatar(20),
+      leading: Hero(tag: person.tissUri, child: person.getCircleAvatar(20)),
       title: Text(
         "${person.firstName} ${person.lastName}",
       ),

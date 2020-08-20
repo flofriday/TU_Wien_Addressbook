@@ -8,9 +8,22 @@ class SimpleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: SelectableText(this.title),
-      subtitle: SelectableText(this.subtitle),
+    final theme = Theme.of(context);
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SelectableText(title, style: theme.textTheme.subtitle1),
+          SelectableText(
+            subtitle,
+            style: theme.textTheme.bodyText2
+                .copyWith(color: theme.textTheme.caption.color),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -134,9 +134,12 @@ class PersonSearch extends SearchDelegate<Person> {
               color: Theme.of(context).cardColor,
               child: ListView.separated(
                 itemCount: results.length + 1,
-                separatorBuilder: (BuildContext context, int index) => Divider(
-                  height: 0,
-                ),
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider(
+                    height: 0,
+                    indent: index == 0 ? 0 : (16 + 40 + 16).toDouble(),
+                  );
+                },
                 itemBuilder: (BuildContext context, int index) {
                   if (index == 0) {
                     return SingleChildScrollView(
@@ -191,6 +194,9 @@ class PersonSearch extends SearchDelegate<Person> {
                               },
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 8),
+                          )
                         ],
                       ),
                     );

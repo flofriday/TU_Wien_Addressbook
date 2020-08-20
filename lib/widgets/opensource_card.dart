@@ -18,7 +18,7 @@ class OpenSourceCard extends StatelessWidget {
             child: RichText(
               textAlign: TextAlign.start,
               text: TextSpan(
-                text: 'Diese App ist freie Software unter der MIT Lizens. ' +
+                text: 'Diese App ist freie Software unter der MIT Lizenz. ' +
                     'Dies bedeutet jeder hat die Freiheit, den Quellcode zu ' +
                     'untersuchen, Änderungen an diesem vorzunehemen, und die ' +
                     'App mit oder ohne Änderungen zu redistributieren.\n\n',
@@ -50,7 +50,7 @@ class OpenSourceCard extends StatelessWidget {
                     launchInBrowser(
                         "https://github.com/flofriday/TU_Wien_Addressbook/blob/master/LICENSE");
                   },
-                  child: Text("MIT Lizens"))
+                  child: Text("MIT Lizenz"))
             ],
           )
         ],
