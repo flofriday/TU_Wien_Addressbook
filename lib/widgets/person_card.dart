@@ -68,8 +68,7 @@ class PersonInfoCard extends StatelessWidget {
                     }),
                     Builder(
                       builder: (BuildContext context) {
-                        if (person.tissUri == null || person.employee == null)
-                          return Container();
+                        if (person.tissUri == null) return Container();
 
                         return FlatButton.icon(
                           icon: Icon(Icons.school),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tu_wien_addressbook/widgets/login_card.dart';
 import 'package:tu_wien_addressbook/widgets/opensource_card.dart';
+import 'package:tu_wien_addressbook/widgets/thirdparty_card.dart';
 
 class SettingsScreen extends StatelessWidget {
   static const EdgeInsets cardPadding =
@@ -21,6 +22,10 @@ class SettingsScreen extends StatelessWidget {
           Padding(
             padding: cardPadding,
             child: OpenSourceCard(),
+          ),
+          Padding(
+            padding: cardPadding,
+            child: ThridPartyCard(),
           ),
         ],
       ),

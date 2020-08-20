@@ -43,6 +43,7 @@ class EmployeeCard extends StatelessWidget {
           }
 
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: widgets,
           );
         }),
@@ -62,6 +63,7 @@ class EmployeeCard extends StatelessWidget {
           }
 
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: widgets,
           );
         }),

@@ -5,13 +5,10 @@ class SuggestionManager {
 
   Future<List<String>> getSuggestions() async {
     SharedPreferences prefs = await futurePrefs;
-    print("Got Suggestion: ${prefs.getStringList('suggestions') ?? []}");
     return prefs.getStringList('suggestions') ?? [];
   }
 
   Future<void> addSuggestion(String value) async {
-    print("Add Suggestion: $value");
-
     // Load the current suggestions
     SharedPreferences prefs = await futurePrefs;
     List<String> current = prefs.getStringList('suggestions') ?? [];
