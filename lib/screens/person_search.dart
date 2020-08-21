@@ -33,7 +33,7 @@ class PersonSearch extends SearchDelegate<Person> {
 
     // Make the request
     var template = new UriTemplate(
-        "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=50&intern=true");
+        "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=100&intern=true&locale=de");
     String apiUri = template.expand({'query': query});
     var res = await http.get(apiUri, headers: headers);
     return res;
@@ -178,6 +178,10 @@ class PersonSearch extends SearchDelegate<Person> {
                               onSelected: (bool value) {
                                 setState(() {
                                   _femaleFilter = value;
+
+                                  if (_maleFilter && value) {
+                                    _maleFilter = false;
+                                  }
                                 });
                               },
                             ),
@@ -190,6 +194,10 @@ class PersonSearch extends SearchDelegate<Person> {
                               onSelected: (bool value) {
                                 setState(() {
                                   _maleFilter = value;
+
+                                  if (_femaleFilter && value) {
+                                    _femaleFilter = false;
+                                  }
                                 });
                               },
                             ),
@@ -224,40 +232,34 @@ class PersonSearch extends SearchDelegate<Person> {
   @override
   Widget buildSuggestions(BuildContext context) {
     Future<List<String>> futureSuggestions =
-        _suggestionManager.getSuggestions();
+        _suggestionManager.getSuggestionsFor(query);
 
-    return FutureBuilder(
-        future: futureSuggestions,
-        builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
-          if (!snapshot.hasData) return Container();
+    return Container(
+      color: Theme.of(context).cardColor,
+      child: FutureBuilder(
+          future: futureSuggestions,
+          builder:
+              (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+            if (!snapshot.hasData) return Container();
 
-          // Filter the suggestion to match the query
-          List<String> data = snapshot.data;
-          data = data
-              .where((element) =>
-                  element.toLowerCase().contains(query.toLowerCase().trim()))
-              .toList();
+            List<String> data = snapshot.data;
 
-          // Remove duplicates
-          if (query.trim().isNotEmpty) {
-            data = Set<String>.from(data).toList();
-          }
-
-          return ListView.separated(
-              itemCount: data.length,
-              separatorBuilder: (context, index) => Divider(
-                    height: 4,
-                  ),
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  leading: Icon(Icons.access_time),
-                  title: Text(data[index]),
-                  onTap: () {
-                    query = data[index];
-                    showResults(context);
-                  },
-                );
-              });
-        });
+            return ListView.separated(
+                itemCount: data.length,
+                separatorBuilder: (context, index) => Divider(
+                      height: 4,
+                    ),
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    leading: Icon(Icons.access_time),
+                    title: Text(data[index]),
+                    onTap: () {
+                      query = data[index];
+                      showResults(context);
+                    },
+                  );
+                });
+          }),
+    );
   }
 }

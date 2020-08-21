@@ -18,9 +18,9 @@ class OpenSourceCard extends StatelessWidget {
             child: RichText(
               textAlign: TextAlign.start,
               text: TextSpan(
-                text: 'Diese App ist freie Software unter der MIT Lizenz. ' +
-                    'Dies bedeutet jeder hat die Freiheit, den Quellcode zu ' +
-                    'untersuchen, Änderungen an diesem vorzunehemen, und die ' +
+                text: 'Diese App ist freie Software unter der MIT Lizenz. '
+                    'Somit hat jede Person die Freiheit, den Quellcode zu '
+                    'untersuchen, Änderungen an diesem vorzunehemen, und die '
                     'App mit oder ohne Änderungen zu redistributieren.\n\n',
                 style: DefaultTextStyle.of(context).style,
                 children: <TextSpan>[
@@ -28,8 +28,8 @@ class OpenSourceCard extends StatelessWidget {
                       text: 'Warnung: ',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   TextSpan(
-                      text: 'Obwohl die Daten von einer offiziellen TU Wien ' +
-                          'API kommen, ist diese App kein offizielles ' +
+                      text: 'Obwohl die Daten von einer offiziellen TU Wien '
+                          'API kommen, ist diese App kein offizielles '
                           'Angebot der TU Wien!'),
                 ],
               ),

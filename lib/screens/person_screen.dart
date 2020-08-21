@@ -44,7 +44,7 @@ class PersonScreen extends StatelessWidget {
         }
 
         return ListView.builder(
-          itemCount: cards,
+          itemCount: cards + 1,
           itemBuilder: (BuildContext context, int index) {
             // Show the generell information about a person
             if (index == 0) {
@@ -61,6 +61,9 @@ class PersonScreen extends StatelessWidget {
             // Calculate which employee to show with this card
             int empployeeIndex = index - 1;
             if (person.student != null) empployeeIndex--;
+
+            if (index == cards)
+              return Padding(padding: EdgeInsets.only(bottom: 10));
 
             return Padding(
                 padding: cardPadding,

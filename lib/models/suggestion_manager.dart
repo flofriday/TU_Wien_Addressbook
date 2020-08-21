@@ -8,6 +8,15 @@ class SuggestionManager {
     return prefs.getStringList('suggestions') ?? [];
   }
 
+  Future<List<String>> getSuggestionsFor(String query) async {
+    List<String> suggestions = await getSuggestions();
+    suggestions = suggestions
+        .where((element) =>
+            element.toLowerCase().contains(query.toLowerCase().trim()))
+        .toList();
+    return suggestions;
+  }
+
   Future<void> addSuggestion(String value) async {
     // Load the current suggestions
     SharedPreferences prefs = await futurePrefs;
@@ -21,6 +30,13 @@ class SuggestionManager {
     }
     if (current.isNotEmpty && value == current[0]) {
       return;
+    }
+
+    // If that query is already in the history, we just want to move it to the
+    // top
+    String _value = value.toLowerCase();
+    for (int i = 0; i < current.length; i++) {
+      if (_value == current[i].toLowerCase()) current.removeAt(i);
     }
 
     // Add the new value

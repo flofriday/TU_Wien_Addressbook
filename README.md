@@ -1,11 +1,11 @@
-# TU Wien Addressbook
-A very simple Android and iOS App to search [TU Wien](https://www.tuwien.at/en/) employees and students.
+# TU Wien Addressbook (unofficial)
+An unofficial Android and iOS App to search [TU Wien](https://www.tuwien.at/en/) employees and students.
 
 ![Screenshot](screenshot.png)
 
 [Download](https://github.com/flofriday/TU_Wien_Addressbook/releases/latest) the latest release for Android.
 
-**Warning :** While the data this app displays comes from an official TU Wien
+**Warning :** While the data this app displays, comes from an official TU Wien
 API, the app itself is not official!
 
 ## Build it yourself
