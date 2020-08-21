@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tu_wien_addressbook/screens/person_search.dart';
 import 'package:tu_wien_addressbook/screens/settings_screen.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
-import 'package:tu_wien_addressbook/screens/person_screen.dart';
 
 void main() => runApp(App());
 
@@ -20,7 +17,6 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.blueGrey[50],
       ),
-      //theme: addressTheme,
       debugShowCheckedModeBanner: false,
       home: MainPage(title: 'TU Addressbuch'),
     );
@@ -75,49 +71,6 @@ class _MainPageState extends State<MainPage> {
         ],
       ),
       body: HomeScreen(),
-      /*body: Builder(builder: (BuildContext context) {
-        if (person != null) {
-          return PersonScreen(person);
-        }
-
-        // No person in memory so load one from shared preferences
-        return FutureBuilder<SharedPreferences>(
-            future: futurePrefs,
-            builder: (BuildContext context,
-                AsyncSnapshot<SharedPreferences> snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: Text('Lade...'),
-                );
-              }
-
-              SharedPreferences prefs = snapshot.data;
-
-              try {
-                this.person = Person.fromJson(
-                    jsonDecode(prefs.getString("currentperson")));
-                return PersonScreen(person);
-              } catch (e) {
-                print(e);
-                return Center(
-                    child: Text('Suche eine Person die du kennst...'));
-              }
-            });
-      }),*/
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Person p =
-              await showSearch(context: context, delegate: PersonSearch());
-          if (p == null) return;
-          setState(() {
-            this.person = p;
-          });
-          SharedPreferences prefs = await futurePrefs;
-          String json = jsonEncode(person.toJson());
-          await prefs.setString("currentperson", json);
-        },
-        child: Icon(Icons.search),
-      ),*/
     );
   }
 }
