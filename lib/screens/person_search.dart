@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
@@ -58,6 +59,16 @@ class PersonSearch extends SearchDelegate<Person> {
     return data;
   }
 
+  // TODO: fix appbar in dark theme
+  // @override
+  // ThemeData appBarTheme(BuildContext context) {
+  //   assert(context != null);
+  //   ThemeData theme = Theme.of(context);
+  //   assert(theme != null);
+  //   theme.textTheme.apply(bodyColor: Colors.white);
+  //   return theme;
+  // }
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return <Widget>[
@@ -74,7 +85,7 @@ class PersonSearch extends SearchDelegate<Person> {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-      icon: Icon(Icons.arrow_back),
+      icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
       onPressed: () {
         close(context, null);
       },

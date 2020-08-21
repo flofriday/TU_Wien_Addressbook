@@ -17,7 +17,7 @@ class ThridPartyCard extends StatelessWidget {
                 "Diese Bibliotheken haben mir geholfen die App zu entwickeln."),
           ),
           FlatButton(
-            textColor: Theme.of(context).accentColor,
+            //textColor: Theme.of(context).accentColor,
             onPressed: () {
               showLicensePage(context: context);
             },
