@@ -110,6 +110,13 @@ class Person {
     return description;
   }
 
+  String getShareText() {
+    String s = "${getNameWithTitles()}\n\n${getShortDescription()}\n\n$email";
+    if (this.phoneNumber != null) s += "\n\n$phoneNumber";
+    s += "\n\n${getTissUrl()}";
+    return s;
+  }
+
   CircleAvatar getCircleAvatar(double radius) {
     if (this.pictureUri != null) {
       return CircleAvatar(

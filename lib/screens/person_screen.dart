@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
 import 'package:tu_wien_addressbook/widgets/employee_card.dart';
 import 'package:tu_wien_addressbook/widgets/student_card.dart';
@@ -23,6 +24,14 @@ class PersonScreen extends StatelessWidget {
           },
         ),
         title: Text("${person.firstName} ${person.lastName}"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.share),
+            onPressed: () {
+              Share.share(person.getShareText());
+            },
+          )
+        ],
       ),
       body: Builder(builder: (BuildContext context) {
         // Calculate the number of cards shown
