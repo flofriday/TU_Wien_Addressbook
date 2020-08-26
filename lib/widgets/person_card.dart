@@ -27,7 +27,7 @@ class PersonInfoCard extends StatelessWidget {
                 SimpleTile(title: "Geschlecht", subtitle: person.getGender()),
                 if (person.email != null)
                   SimpleTile(title: "Email", subtitle: person.email),
-                if (person.otherEmails != null)
+                if (person.otherEmails != null && person.otherEmails.isNotEmpty)
                   ...person.otherEmails.map((email) => SimpleTile(
                         title: "Weitere Email",
                         subtitle: email,
@@ -73,7 +73,8 @@ class PersonInfoCard extends StatelessWidget {
                             ),
                             onPressed: () async {
                               // Open the email app if there is only one email
-                              if (person.otherEmails == null) {
+                              if (person.otherEmails == null ||
+                                  person.otherEmails.isEmpty) {
                                 launchEmail(person.email, "",
                                     person.getNameWithTitles());
                                 return;
