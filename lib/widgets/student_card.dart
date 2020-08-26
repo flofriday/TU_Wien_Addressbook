@@ -10,20 +10,24 @@ class StudentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8),
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SimpleTile(
-          title: person.gender == "W" ? "Studentin" : "Student",
-          subtitle: "seit ${person.student.getMatriculationYear()}",
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SimpleTile(
+              title: person.gender == "W" ? "Studentin" : "Student",
+              subtitle: "seit ${person.student.getMatriculationYear()}",
+            ),
+            SimpleTile(
+              title: "Matrikelnummer",
+              subtitle: person.student.matriculationNumber,
+            ),
+          ],
         ),
-        SimpleTile(
-          title: "Matrikelnummer",
-          subtitle: person.student.matriculationNumber,
-        ),
-      ],
-    ));
+      ),
+    );
   }
 }
