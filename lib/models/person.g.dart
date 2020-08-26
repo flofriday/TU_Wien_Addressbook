@@ -19,6 +19,8 @@ Person _$PersonFromJson(Map<String, dynamic> json) {
     ..otherEmails =
         (json['other_emails'] as List)?.map((e) => e as String)?.toList()
     ..phoneNumber = json['main_phone_number'] as String
+    ..rawAdditionalInfos =
+        (json['additional_infos'] as List)?.map((e) => e as String)?.toList()
     ..employee = (json['employee'] as List)
         ?.map((e) =>
             e == null ? null : Employee.fromJson(e as Map<String, dynamic>))
@@ -39,6 +41,7 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'main_email': instance.email,
       'other_emails': instance.otherEmails,
       'main_phone_number': instance.phoneNumber,
+      'additional_infos': instance.rawAdditionalInfos,
       'employee': instance.employee,
       'student': instance.student,
     };

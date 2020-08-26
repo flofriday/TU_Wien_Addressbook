@@ -14,10 +14,10 @@ class PersonInfoCard extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
-            margin: EdgeInsets.only(top: 100),
-            width: double.infinity,
-            child: Card(
-                child: Column(
+          margin: EdgeInsets.only(top: 100),
+          width: double.infinity,
+          child: Card(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -25,64 +25,107 @@ class PersonInfoCard extends StatelessWidget {
                 Padding(padding: EdgeInsets.only(top: 100)),
                 SimpleTile(title: "Name", subtitle: person.getNameWithTitles()),
                 SimpleTile(title: "Geschlecht", subtitle: person.getGender()),
-                Builder(
-                  builder: (BuildContext context) {
-                    if (person.email == null) return Container();
-
-                    return SimpleTile(title: "Email", subtitle: person.email);
-                  },
-                ),
-                Builder(
-                  builder: (BuildContext context) {
-                    if (person.phoneNumber == null) return Container();
-
-                    return SimpleTile(
-                        title: "Telefon", subtitle: person.phoneNumber);
-                  },
-                ),
+                if (person.email != null)
+                  SimpleTile(title: "Email", subtitle: person.email),
+                if (person.otherEmails != null)
+                  ...person.otherEmails.map((email) => SimpleTile(
+                        title: "Weitere Email",
+                        subtitle: email,
+                      )),
+                if (person.phoneNumber != null)
+                  SimpleTile(title: "Telefon", subtitle: person.phoneNumber),
                 ButtonBar(
                   alignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Builder(builder: (BuildContext context) {
-                      if (person.phoneNumber == null) return Container();
-
-                      return FlatButton.icon(
+                    if (person.phoneNumber != null)
+                      FlatButton.icon(
                         icon: Icon(Icons.phone),
                         label: const Text('TEL'),
                         onPressed: () {
                           launchPhone(person.phoneNumber);
                         },
-                      );
-                    }),
-                    Builder(builder: (BuildContext context) {
-                      if (person.email == null) return Container();
-
-                      return FlatButton.icon(
+                      ),
+                    if (person.email != null)
+                      FlatButton.icon(
                         icon: Icon(Icons.email),
                         label: const Text('EMAIL'),
-                        onPressed: () {
-                          launchEmail(
-                              person.email, "", person.getNameWithTitles());
-                        },
-                      );
-                    }),
-                    Builder(
-                      builder: (BuildContext context) {
-                        if (person.tissUri == null) return Container();
+                        onPressed: () async {
+                          // Open the email app if there is only one email
+                          if (person.otherEmails == null) {
+                            launchEmail(
+                                person.email, "", person.getNameWithTitles());
+                            return;
+                          }
 
-                        return FlatButton.icon(
-                          icon: Icon(Icons.school),
-                          label: Text('TISS'),
-                          onPressed: () {
-                            launchInBrowser(person.getTissUrl());
-                          },
-                        );
-                      },
-                    )
+                          // Open a bottom modal sheet to ask the user to select
+                          // their prefered email.
+                          String choice = await showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).cardColor,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  //color: Theme.of(context).cardColor,
+                                  child: SafeArea(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ListTile(
+                                          title: Text("Wähle eine Email",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6),
+                                        ),
+                                        ListTile(
+                                          title: Text(person.email),
+                                          subtitle: Text("Haupt Email"),
+                                          onTap: () {
+                                            Navigator.pop(
+                                                context, person.email);
+                                          },
+                                        ),
+                                        ...person.otherEmails.map(
+                                          (email) => ListTile(
+                                            title: Text(email),
+                                            subtitle: Text("Weitere Email"),
+                                            onTap: () {
+                                              Navigator.pop(context, email);
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              });
+
+                          // Do nothing if the user didn't selected anything
+                          if (choice == null) return;
+
+                          // Launch the phone
+                          launchEmail(choice, "", person.getNameWithTitles());
+                        },
+                      ),
+                    if (person.tissUri != null)
+                      FlatButton.icon(
+                        icon: Icon(Icons.school),
+                        label: Text('TISS'),
+                        onPressed: () {
+                          launchInBrowser(person.getTissUrl());
+                        },
+                      ),
                   ],
                 ),
               ],
-            ))),
+            ),
+          ),
+        ),
         Positioned(
           top: .0,
           left: .0,

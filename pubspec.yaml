@@ -15,7 +15,7 @@ version: 0.4.0
 
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.9.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -36,6 +36,9 @@ dependencies:
 
   # A library to display hyperlinks
   url_launcher: ^5.5.0
+
+  # To parse HTML encoded text as normal text
+  html_character_entities: ^0.1.2+4
 
   # Save simple key-value pairs on the device
   shared_preferences: '>=0.5.0 <2.0.0'

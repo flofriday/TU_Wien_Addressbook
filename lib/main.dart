@@ -1,8 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tu_wien_addressbook/screens/person_search.dart';
 import 'package:tu_wien_addressbook/screens/settings_screen.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
+import 'package:tu_wien_addressbook/widgets/utils.dart';
 
 void main() => runApp(App());
 
@@ -112,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                       padding: EdgeInsets.only(left: 10),
                     ),
                     Text(
-                      "Studenten, Angetellte",
+                      "Studierende, Angestellte",
                       style: TextStyle(fontSize: 20),
                     ),
                   ],
@@ -126,7 +128,24 @@ class HomeScreen extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(8),
-            child: Text("Made with ❤️ by flofriday"),
+            child: RichText(
+              text: TextSpan(
+                  style: DefaultTextStyle.of(context).style.copyWith(
+                      fontSize: Theme.of(context).textTheme.caption.fontSize),
+                  children: [
+                    TextSpan(
+                      text: "Made with ❤️ by ",
+                    ),
+                    TextSpan(
+                        text: "flofriday",
+                        //style: TextStyle(decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            print("tap");
+                            launchInBrowser("https://github.com/flofriday");
+                          }),
+                  ]),
+            ),
           ),
         ],
       ),

@@ -59,15 +59,18 @@ class PersonSearch extends SearchDelegate<Person> {
     return data;
   }
 
-  // TODO: fix appbar in dark theme
-  // @override
-  // ThemeData appBarTheme(BuildContext context) {
-  //   assert(context != null);
-  //   ThemeData theme = Theme.of(context);
-  //   assert(theme != null);
-  //   theme.textTheme.apply(bodyColor: Colors.white);
-  //   return theme;
-  // }
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
+    return theme.copyWith(
+      primaryColor: theme.cardColor,
+      primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.grey),
+      primaryColorBrightness: MediaQuery.of(context).platformBrightness,
+      primaryTextTheme: theme.textTheme,
+    );
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -160,7 +163,7 @@ class PersonSearch extends SearchDelegate<Person> {
                           Padding(
                             padding: EdgeInsets.only(left: 8),
                             child: FilterChip(
-                              label: Text("Studenten"),
+                              label: Text("Studierende"),
                               selected: _studentFilter,
                               onSelected: (bool value) {
                                 setState(() {

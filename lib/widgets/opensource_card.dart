@@ -19,8 +19,8 @@ class OpenSourceCard extends StatelessWidget {
               textAlign: TextAlign.start,
               text: TextSpan(
                 text: 'Diese App ist freie Software unter der MIT Lizenz. '
-                    'Somit hat jede Person die Freiheit, den Quellcode zu '
-                    'untersuchen, Änderungen an diesem vorzunehemen, und die '
+                    'Somit hat jede Person die Freiheit den Quellcode zu '
+                    'untersuchen, Änderungen an diesem vorzunehemen und die '
                     'App mit oder ohne Änderungen zu redistributieren.\n\n',
                 style: DefaultTextStyle.of(context).style,
                 children: <TextSpan>[

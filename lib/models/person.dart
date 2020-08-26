@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uri/uri.dart';
+import 'package:html_character_entities/html_character_entities.dart';
 
 part 'person.g.dart';
 
@@ -34,6 +35,13 @@ class Person {
 
   @JsonKey(name: 'main_phone_number')
   String phoneNumber;
+
+  // This text is HTML encoded!
+  // I know, its cracy but you need to use getAdditionalInfos if you want to
+  // get it decoded.
+  //@JsonKey(name: 'additional_infos', includeIfNull: false)
+  @JsonKey(name: 'additional_infos')
+  List<String> rawAdditionalInfos;
 
   List<Employee> employee;
   Student student;

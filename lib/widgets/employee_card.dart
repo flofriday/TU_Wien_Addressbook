@@ -20,13 +20,11 @@ class EmployeeCard extends StatelessWidget {
           title: employee.function,
           subtitle: employee.orgRef.name,
         ),
-        Builder(builder: (BuildContext context) {
-          if (employee.room == null) return Container();
-
-          return SimpleTile(
-              title: "Raum " + employee.room.roomCode,
-              subtitle: employee.room.address.toString());
-        }),
+        if (employee.room != null)
+          SimpleTile(
+            title: "Raum " + employee.room.roomCode,
+            subtitle: employee.room.address.toString(),
+          ),
         Builder(builder: (BuildContext context) {
           if (employee.phoneNumbers == null) return Container();
 
@@ -70,10 +68,8 @@ class EmployeeCard extends StatelessWidget {
         ButtonBar(
           alignment: MainAxisAlignment.center,
           children: <Widget>[
-            Builder(builder: (BuildContext context) {
-              if (employee.phoneNumbers == null) return Container();
-
-              return FlatButton.icon(
+            if (employee.phoneNumbers != null)
+              FlatButton.icon(
                 icon: Icon(Icons.phone),
                 label: const Text('TEL'),
                 onPressed: () async {
@@ -83,20 +79,42 @@ class EmployeeCard extends StatelessWidget {
                     return;
                   }
 
-                  // Open a popup if there are multiple numbers
-                  String choice = await showDialog(
+                  // Open a bottom modal sheet and ask the user which website
+                  // they wanna see
+                  String choice = await showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                            title: const Text('Wähle eine Nummer'),
-                            children: employee.phoneNumbers.map((phone) {
-                              return SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context, phone);
-                                },
-                                child: Text(phone),
-                              );
-                            }).toList());
+                      builder: (context) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          //color: Theme.of(context).cardColor,
+                          child: SafeArea(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: Text("Wähle eine Nummer",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6),
+                                ),
+                                ...employee.phoneNumbers.map(
+                                  (phone) => ListTile(
+                                    title: Text(phone),
+                                    onTap: () {
+                                      Navigator.pop(context, phone);
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
                       });
 
                   // Do nothing if the user didn't selected anything
@@ -105,12 +123,9 @@ class EmployeeCard extends StatelessWidget {
                   // Launch the phone
                   launchPhone(choice);
                 },
-              );
-            }),
-            Builder(builder: (BuildContext context) {
-              if (employee.websites == null) return Container();
-
-              return FlatButton.icon(
+              ),
+            if (employee.websites != null)
+              FlatButton.icon(
                 icon: Icon(Icons.open_in_browser),
                 label: const Text('WEB'),
                 onPressed: () async {
@@ -120,20 +135,42 @@ class EmployeeCard extends StatelessWidget {
                     return;
                   }
 
-                  // Open a popup if there are multiple numbers
-                  String choice = await showDialog(
+                  // Open a bottom modal sheet and ask the user which website
+                  // they wanna see
+                  String choice = await showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       context: context,
-                      builder: (BuildContext context) {
-                        return SimpleDialog(
-                            title: const Text('Wähle eine Website'),
-                            children: employee.websites.map((website) {
-                              return SimpleDialogOption(
-                                onPressed: () {
-                                  Navigator.pop(context, website.uri);
-                                },
-                                child: Text(website.uri),
-                              );
-                            }).toList());
+                      builder: (context) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          //color: Theme.of(context).cardColor,
+                          child: SafeArea(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: Text("Wähle eine Webseite",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6),
+                                ),
+                                ...employee.websites.map(
+                                  (website) => ListTile(
+                                    title: Text(website.uri),
+                                    onTap: () {
+                                      Navigator.pop(context, website.uri);
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
                       });
 
                   // Do nothing if the user didn't selected anything
@@ -142,33 +179,23 @@ class EmployeeCard extends StatelessWidget {
                   // Launch the phone
                   launchInBrowser(choice);
                 },
-              );
-            }),
-            Builder(builder: (BuildContext context) {
-              if (employee.room == null) return Container();
-
-              return FlatButton.icon(
+              ),
+            if (employee.room != null)
+              FlatButton.icon(
                 icon: Icon(Icons.map),
                 label: const Text('KARTE'),
                 onPressed: () {
                   launchInBrowser(employee.room.getMapUrl());
                 },
-              );
-            }),
-            Builder(
-              builder: (BuildContext context) {
-                if (employee.orgRef == null || employee.orgRef.tissId == null)
-                  return Container();
-
-                return FlatButton.icon(
-                  icon: Icon(Icons.school),
-                  label: Text('TISS'),
-                  onPressed: () {
-                    launchInBrowser(employee.orgRef.getTissUrl());
-                  },
-                );
-              },
-            ),
+              ),
+            if (employee.orgRef != null && employee.orgRef.tissId != null)
+              FlatButton.icon(
+                icon: Icon(Icons.school),
+                label: Text('TISS'),
+                onPressed: () {
+                  launchInBrowser(employee.orgRef.getTissUrl());
+                },
+              ),
           ],
         ),
       ],

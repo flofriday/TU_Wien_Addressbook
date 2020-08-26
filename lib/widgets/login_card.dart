@@ -23,48 +23,45 @@ class LoginCard extends StatelessWidget {
 
                 SharedPreferences prefs = snapshot.data;
 
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.person),
-                        labelText: 'Username',
-                      ),
-                      controller: TextEditingController()
-                        ..text = prefs.getString('username'),
-                      onChanged: (String value) async {
-                        await prefs.setString('username', value);
-                        await prefs.remove('tisscookie');
-                        await prefs.remove('tisscookietime');
-                      },
+                return Column(mainAxisSize: MainAxisSize.min, children: [
+                  TextField(
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.person),
+                      labelText: 'Username',
                     ),
-                    TextField(
-                      decoration: const InputDecoration(
-                        icon: Icon(Icons.lock),
-                        labelText: 'Passwort',
-                      ),
-                      obscureText: true,
-                      controller: TextEditingController()
-                        ..text = prefs.getString('password'),
-                      onChanged: (String value) async {
-                        await prefs.setString('password', value);
-                        await prefs.remove('tisscookie');
-                        await prefs.remove('tisscookietime');
-                      },
+                    controller: TextEditingController()
+                      ..text = prefs.getString('username'),
+                    onChanged: (String value) async {
+                      await prefs.setString('username', value);
+                      await prefs.remove('tisscookie');
+                      await prefs.remove('tisscookietime');
+                    },
+                  ),
+                  TextField(
+                    decoration: const InputDecoration(
+                      icon: Icon(Icons.lock),
+                      labelText: 'Passwort',
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child:
-                          Text("Informationen über Studenten werden von TISS "
-                              "geschützt und können deswegen nur von "
-                              "eingeloggten Usern gesehen werden.\n\n"
-                              "Deine Logindaten werden nur lokal auf "
-                              "diesem Gerät gespeichert und an nur TISS "
-                              "zur Authentifizierung gesendet."),
-                    ),
-                  ],
-                );
+                    obscureText: true,
+                    controller: TextEditingController()
+                      ..text = prefs.getString('password'),
+                    onChanged: (String value) async {
+                      await prefs.setString('password', value);
+                      await prefs.remove('tisscookie');
+                      await prefs.remove('tisscookietime');
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child:
+                        Text("Informationen über Studierende werden von TISS "
+                            "geschützt und können deswegen nur von "
+                            "eingeloggten Usern gesehen werden.\n\n"
+                            "Deine Logindaten werden nur lokal auf "
+                            "diesem Gerät gespeichert und an nur TISS "
+                            "zur Authentifizierung gesendet."),
+                  ),
+                ]);
               }),
         ),
       ]),
