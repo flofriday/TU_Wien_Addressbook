@@ -15,15 +15,21 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'TU Addressbuch',
       theme: ThemeData(
-        accentColor: Colors.blueGrey,
+        accentColor: Colors.orange,
         primarySwatch: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.blueGrey[50],
+        cardTheme: CardTheme(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)))),
       ),
-      darkTheme: ThemeData.dark().copyWith(
-        accentColor: Colors.blueGrey,
-        //primaryColor: Colors.blueGrey,
-        //primarySwatch: Colors.blueGrey,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        accentColor: Colors.orangeAccent,
+        primarySwatch: Colors.blueGrey,
         //scaffoldBackgroundColor: Colors.blueGrey[50],
+        cardTheme: CardTheme(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)))),
       ),
       debugShowCheckedModeBanner: false,
       home: MainPage(title: 'TU Addressbuch'),

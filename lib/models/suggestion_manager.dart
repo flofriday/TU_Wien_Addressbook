@@ -10,11 +10,20 @@ class SuggestionManager {
 
   Future<List<String>> getSuggestionsFor(String query) async {
     List<String> suggestions = await getSuggestions();
-    suggestions = suggestions
-        .where((element) =>
-            element.toLowerCase().contains(query.toLowerCase().trim()))
+    if (query.trim().isEmpty) return suggestions;
+
+    query = query.toLowerCase().trim();
+
+    // Add first all suggestion that start with the same letters
+    var result = suggestions
+        .where((element) => element.toLowerCase().startsWith(query))
         .toList();
-    return suggestions;
+
+    // Than add all suggestions that contain the same letters
+    result.addAll(suggestions.where((element) =>
+        !element.toLowerCase().startsWith(query) &&
+        element.toLowerCase().contains(query)));
+    return result;
   }
 
   Future<void> addSuggestion(String value) async {

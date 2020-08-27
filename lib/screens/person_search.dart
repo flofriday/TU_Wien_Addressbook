@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
@@ -19,6 +20,7 @@ class PersonSearch extends SearchDelegate<Person> {
   bool _studentFilter = false;
   bool _femaleFilter = false;
   bool _maleFilter = false;
+  Random _rng = Random();
 
   PersonSearch()
       : super(
@@ -26,6 +28,11 @@ class PersonSearch extends SearchDelegate<Person> {
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.search,
         );
+
+  String _getNoResultEmoji() {
+    var emojis = ["🤷‍♂️‍", "🤷‍♀️"];
+    return emojis[(_rng.nextInt(emojis.length))];
+  }
 
   Future<http.Response> _makeRequest(String query) async {
     // Get the Cookies
@@ -36,7 +43,8 @@ class PersonSearch extends SearchDelegate<Person> {
     var template = new UriTemplate(
         "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=100&intern=true&locale=de");
     String apiUri = template.expand({'query': query});
-    var res = await http.get(apiUri, headers: headers);
+    http.Response res = await http.get(apiUri, headers: headers);
+    //.timeout(const Duration(seconds: 2));
     return res;
   }
 
@@ -105,6 +113,32 @@ class PersonSearch extends SearchDelegate<Person> {
       return FutureBuilder<Tiss>(
           future: data,
           builder: (BuildContext context, AsyncSnapshot<Tiss> snapshot) {
+            // Check for errors
+            if (snapshot.hasError) {
+              return SafeArea(
+                child: Center(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "✈️",
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .headline3
+                                    .fontSize,
+                              ),
+                        ),
+                        Text(
+                          "Ein Fehler ist aufgetreten beim Laden der Daten.",
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ]),
+                ),
+              );
+            }
+
             // Check if the data is ready
             if (!snapshot.hasData) {
               return Center(
@@ -119,12 +153,33 @@ class PersonSearch extends SearchDelegate<Person> {
             if (data == null) {
               return Center(
                   child:
-                      Text("Ein Fehler ist aufgetreten beim laden der Daten."));
+                      Text("Ein Fehler ist aufgetreten beim Laden der Daten."));
             }
 
             // Show a error if there are no results
             if (data.results.length == 0) {
-              return Center(child: Text("Niemanden gefunden. 🤬"));
+              return SafeArea(
+                child: Center(
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          _getNoResultEmoji(),
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .headline3
+                                    .fontSize,
+                              ),
+                        ),
+                        Text(
+                          "Niemanden gefunden.",
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ]),
+                ),
+              );
             }
 
             // Filter the results
@@ -224,8 +279,8 @@ class PersonSearch extends SearchDelegate<Person> {
                     );
                   }
 
-                  return GestureDetector(
-                    child: PersonEntry(results[index - 1]),
+                  return PersonEntry(
+                    results[index - 1],
                     onTap: () {
                       Navigator.push(
                         context,
