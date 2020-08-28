@@ -75,7 +75,7 @@ Unfortunately, I couldn't find anything like that, so we will do it like the
 Webinterface with cookies, parsing HTML, parsing URLs, following redirects and 
 many more cookies.
 
-Sounds fun? I gurantee you **IT IS NOT**!
+Sounds fun? I guarantee you **IT IS NOT**!
 
 #### STEP 0: Requirements
 Many requests will set you a cookie, so just save them and if you do a request 
