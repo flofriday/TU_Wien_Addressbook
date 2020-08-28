@@ -81,6 +81,8 @@ class EmployeeCard extends StatelessWidget {
                           Text(
                             "Telefon",
                             style: Theme.of(context).textTheme.caption,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -140,6 +142,8 @@ class EmployeeCard extends StatelessWidget {
                           Text(
                             "Webseite",
                             style: Theme.of(context).textTheme.caption,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -200,6 +204,8 @@ class EmployeeCard extends StatelessWidget {
                           Text(
                             "Karte",
                             style: Theme.of(context).textTheme.caption,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -218,6 +224,8 @@ class EmployeeCard extends StatelessWidget {
                           Text(
                             "TISS",
                             style: Theme.of(context).textTheme.caption,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),

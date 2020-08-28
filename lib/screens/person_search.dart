@@ -41,10 +41,9 @@ class PersonSearch extends SearchDelegate<Person> {
 
     // Make the request
     var template = new UriTemplate(
-        "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=100&intern=true&locale=de");
+        "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=100&preview_picture_uri=true&intern=true&locale=de");
     String apiUri = template.expand({'query': query});
     http.Response res = await http.get(apiUri, headers: headers);
-    //.timeout(const Duration(seconds: 2));
     return res;
   }
 

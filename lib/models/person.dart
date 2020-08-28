@@ -27,6 +27,9 @@ class Person {
   @JsonKey(name: 'picture_uri')
   String pictureUri;
 
+  @JsonKey(name: 'preview_picture_uri')
+  String previewPictureUri;
+
   @JsonKey(name: 'main_email')
   String email;
 
@@ -97,6 +100,14 @@ class Person {
     return "https://www.tuwien.at/apple-touch-icon.png";
   }
 
+  String getPreviewPictureUrl() {
+    if (this.pictureUri != null) {
+      return "https://tiss.tuwien.ac.at" + this.previewPictureUri;
+    }
+
+    return "https://www.tuwien.at/apple-touch-icon.png";
+  }
+
   String getShortDescription() {
     String description = "";
 
@@ -127,23 +138,6 @@ class Person {
     if (this.phoneNumber != null) s += "\n\n$phoneNumber";
     s += "\n\n${getTissUrl()}";
     return s;
-  }
-
-  CircleAvatar getCircleAvatar(double radius) {
-    if (this.pictureUri != null) {
-      return CircleAvatar(
-        radius: radius,
-        backgroundImage: NetworkImage(this.getPictureUrl()),
-      );
-    }
-
-    return CircleAvatar(
-      radius: radius,
-      child: Text(
-        this.firstName[0] + this.lastName[0],
-        style: TextStyle(fontSize: radius * 0.6),
-      ),
-    );
   }
 }
 

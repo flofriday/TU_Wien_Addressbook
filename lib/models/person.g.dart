@@ -15,6 +15,7 @@ Person _$PersonFromJson(Map<String, dynamic> json) {
     ..postpositionedTitles = json['postpositioned_titles'] as String
     ..tissUri = json['card_uri'] as String
     ..pictureUri = json['picture_uri'] as String
+    ..previewPictureUri = json['preview_picture_uri'] as String
     ..email = json['main_email'] as String
     ..otherEmails =
         (json['other_emails'] as List)?.map((e) => e as String)?.toList()
@@ -38,6 +39,7 @@ Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'postpositioned_titles': instance.postpositionedTitles,
       'card_uri': instance.tissUri,
       'picture_uri': instance.pictureUri,
+      'preview_picture_uri': instance.previewPictureUri,
       'main_email': instance.email,
       'other_emails': instance.otherEmails,
       'main_phone_number': instance.phoneNumber,

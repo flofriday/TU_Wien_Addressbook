@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
 import 'package:tu_wien_addressbook/screens/image_screen.dart';
+import 'package:tu_wien_addressbook/widgets/person_avatar.dart';
 import 'package:tu_wien_addressbook/widgets/simple_tile.dart';
 import 'package:tu_wien_addressbook/widgets/utils.dart';
 
@@ -164,7 +165,7 @@ class PersonInfoCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
               elevation: 4,
               child: person.pictureUri == null
-                  ? person.getCircleAvatar(100)
+                  ? PersonAvatar(person, 100)
                   : GestureDetector(
                       child: Hero(
                         tag: 'personimage',
@@ -176,6 +177,15 @@ class PersonInfoCard extends StatelessWidget {
                             height: 200,
                             width: 200,
                             fit: BoxFit.cover,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Image.network(
+                                person.getPreviewPictureUrl(),
+                                height: 200,
+                                width: 200,
+                                fit: BoxFit.cover,
+                              );
+                            },
                           ),
                         ),
                         flightShuttleBuilder: (flightContext, animation,
