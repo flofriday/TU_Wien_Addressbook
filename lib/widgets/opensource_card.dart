@@ -36,6 +36,7 @@ class OpenSourceCard extends StatelessWidget {
             ),
           ),
           ButtonBar(
+            buttonTextTheme: ButtonTextTheme.accent,
             alignment: MainAxisAlignment.start,
             children: [
               OutlineButton(

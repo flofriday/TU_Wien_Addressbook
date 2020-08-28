@@ -1,3 +1,4 @@
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
 import 'package:tu_wien_addressbook/screens/image_screen.dart';
@@ -162,18 +163,64 @@ class PersonInfoCard extends StatelessWidget {
             child: Material(
               borderRadius: BorderRadius.circular(100),
               elevation: 4,
-              child: GestureDetector(
-                child: person.getCircleAvatar(100),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ImageScreen(person.getPictureUrl(),
-                          "${person.firstName} ${person.lastName}"),
+              child: person.pictureUri == null
+                  ? person.getCircleAvatar(100)
+                  : GestureDetector(
+                      child: Hero(
+                        tag: 'personimage',
+                        transitionOnUserGestures: true,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            person.getPictureUrl(),
+                            height: 200,
+                            width: 200,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        flightShuttleBuilder: (flightContext, animation,
+                            direction, fromContext, toContext) {
+                          print(animation.value);
+                          return AnimatedBuilder(
+                              animation: animation,
+                              builder:
+                                  (BuildContext flightContext, Widget child) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                      100 * -(animation.value - 1)),
+                                  child: Image.network(
+                                    person.getPictureUrl(),
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              });
+                        },
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return ImageScreen(
+                                  person.getPictureUrl(), person.getName());
+                            },
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return FadeTransition(
+                                opacity: animation,
+                                child: child,
+                              );
+                            },
+                          ),
+                          /*MaterialPageRoute(
+                            builder: (context) => ImageScreen(
+                                person.getPictureUrl(),
+                                "${person.firstName} ${person.lastName}"),
+                          ),*/
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
           ),
         )

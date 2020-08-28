@@ -52,6 +52,10 @@ class Person {
 
   Map<String, dynamic> toJson() => _$PersonToJson(this);
 
+  String getName() {
+    return "$firstName $lastName";
+  }
+
   String getNameWithTitles() {
     String name = this.firstName + " " + this.lastName;
 

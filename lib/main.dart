@@ -14,8 +14,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TU Addressbuch',
+      locale: Locale('de', 'AT'),
       theme: ThemeData(
-        accentColor: Colors.orange,
+        accentColor: Colors.indigo[400],
+        //accentColor: Colors.teal,
         primarySwatch: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.blueGrey[50],
         cardTheme: CardTheme(
@@ -24,7 +26,7 @@ class App extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        accentColor: Colors.orangeAccent,
+        accentColor: Colors.cyan,
         primarySwatch: Colors.blueGrey,
         //scaffoldBackgroundColor: Colors.blueGrey[50],
         cardTheme: CardTheme(
@@ -104,6 +106,9 @@ class HomeScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(16),
             child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100.0),
+              ),
               color: Theme.of(context).cardColor,
               onPressed: () {
                 showSearch(context: context, delegate: PersonSearch());

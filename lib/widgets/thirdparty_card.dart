@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 
 class ThridPartyCard extends StatelessWidget {
   @override
@@ -17,9 +18,18 @@ class ThridPartyCard extends StatelessWidget {
                 "Diese Bibliotheken haben mir geholfen die App zu entwickeln."),
           ),
           FlatButton(
-            //textColor: Theme.of(context).accentColor,
-            onPressed: () {
-              showLicensePage(context: context);
+            textTheme: ButtonTextTheme.accent,
+            onPressed: () async {
+              PackageInfo packageInfo = await PackageInfo.fromPlatform();
+              showLicensePage(
+                context: context,
+                applicationName: packageInfo.appName,
+                applicationVersion: packageInfo.version,
+                applicationIcon: Image(
+                  image: AssetImage('logo_small.png'),
+                  height: 100,
+                ),
+              );
             },
             child: Text("Lizenzen"),
           )
