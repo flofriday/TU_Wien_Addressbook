@@ -67,7 +67,7 @@ Here is a list of all query parameters:
 | locale      | query | string   | The language of (some?) fields of the result. It uses 2 letter codes like "de" or "en". Default is ????        |
 
 ### How does the app log in, to get student information?
-So most sane persons, would design the authentication process of an API with an 
+So most sane developers, would design the authentication process of an API with an 
 API-token or maybe just let you send the username and password with every 
 request. (API-token is the way better solution)
 
