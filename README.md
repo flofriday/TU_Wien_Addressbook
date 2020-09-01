@@ -14,6 +14,14 @@ API, the app itself is not official!
 * Optional login (needed to get student information)
 * Dark Mode
 
+## Future Features
+Things I should implement, but propably won't.
+
+* Support english
+* Indicate if the user is logged in while searching
+* Indicate that there are no student information without logging in
+* Improve Settings UI
+
 ## Build it yourself
 1) [Install Flutter](https://flutter.dev/docs/get-started/install)
 2) Clone this repository or download it.
