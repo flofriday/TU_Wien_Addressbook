@@ -18,12 +18,16 @@ class ImageScreen extends StatelessWidget {
       body: SafeArea(
         child: Center(
           child: Hero(
-              tag: 'personimage',
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(0),
-                  child: Image.network(
-                    _imageUrl,
-                  ))),
+            tag: 'personimage',
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(0),
+              child: Image.network(
+                _imageUrl,
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
         ),
       ),
     );
