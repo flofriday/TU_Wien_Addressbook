@@ -17,6 +17,7 @@ API, the app itself is not official!
 ## Future Features
 Things I should implement, but propably won't.
 
+* Find students by their mattriculation number
 * Support english
 * Indicate if the user is logged in while searching
 * Indicate that there are no student information without logging in
