@@ -24,7 +24,7 @@ class PersonScreen extends StatelessWidget {
             onPressed: () {
               Share.share(person.getShareText());
             },
-          )
+          ),
         ],
       ),
       body: Builder(builder: (BuildContext context) {

@@ -44,7 +44,7 @@ class LoginCard extends StatelessWidget {
                     ),
                     obscureText: true,
                     controller: TextEditingController()
-                      ..text = prefs!.getString('password')!,
+                      ..text = prefs.getString('password')!,
                     onChanged: (String value) async {
                       await prefs.setString('password', value);
                       await prefs.remove('tisscookie');

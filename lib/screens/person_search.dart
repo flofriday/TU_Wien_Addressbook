@@ -20,6 +20,7 @@ class PersonSearch extends SearchDelegate<Null> {
   bool _femaleFilter = false;
   bool _maleFilter = false;
   Random _rng = Random();
+  double _scrollOffset = 0;
 
   PersonSearch()
       : super(
@@ -57,6 +58,9 @@ class PersonSearch extends SearchDelegate<Null> {
     // Check the cache
     if (_cache.containsKey(query)) return _cache[query];
 
+    // Since we get new data now, we should reset the position of the scroll
+    _scrollOffset = 0;
+
     // Make the request
     http.Response resp = await _makeRequest(query);
     if (resp.statusCode != 200) return null;
@@ -72,13 +76,7 @@ class PersonSearch extends SearchDelegate<Null> {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return theme.copyWith(
-      primaryColor: theme.cardColor,
-      primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.grey),
-      primaryColorBrightness: MediaQuery.of(context).platformBrightness,
-      primaryTextTheme: theme.textTheme,
-    );
+    return Theme.of(context);
   }
 
   @override
@@ -201,10 +199,20 @@ class PersonSearch extends SearchDelegate<Null> {
             }
             List<Person> results = unfiltered.toList();
 
+            // Set up a scroll controller, this is just to update the internal
+            // variable _scrollOffset, so that we don't lose the scroll position
+            // when we click on one item.
+            ScrollController controller =
+                ScrollController(initialScrollOffset: _scrollOffset);
+            controller.addListener(() {
+              _scrollOffset = controller.position.pixels;
+            });
+
             // Build the ui
-            return Container(
+            var result = Container(
               color: Theme.of(context).cardColor,
               child: ListView.separated(
+                controller: controller,
                 itemCount: results.length + 1,
                 separatorBuilder: (BuildContext context, int index) {
                   return Divider(
@@ -285,6 +293,7 @@ class PersonSearch extends SearchDelegate<Null> {
                   return PersonEntry(
                     results[index - 1],
                     onTap: () {
+                      //Navigator.push(
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -297,6 +306,8 @@ class PersonSearch extends SearchDelegate<Null> {
                 },
               ),
             );
+            //_controller.jumpTo(10);
+            return result;
           });
     });
   }
