@@ -9,10 +9,9 @@ import 'package:tu_wien_addressbook/models/tiss.dart';
 import 'package:tu_wien_addressbook/models/tiss_login_manager.dart';
 import 'package:tu_wien_addressbook/screens/person_screen.dart';
 import 'package:tu_wien_addressbook/widgets/person_entry.dart';
-import 'package:uri/uri.dart';
 import 'package:http/http.dart' as http;
 
-class PersonSearch extends SearchDelegate<Person> {
+class PersonSearch extends SearchDelegate<Null> {
   TissLoginManager _tissManager = TissLoginManager();
   SuggestionManager _suggestionManager = SuggestionManager();
   Map<String, Tiss> _cache = Map();
@@ -36,20 +35,25 @@ class PersonSearch extends SearchDelegate<Person> {
 
   Future<http.Response> _makeRequest(String query) async {
     // Get the Cookies
-    String cookies = await _tissManager.getCookies();
+    String cookies = await _tissManager.getCookies()!;
     var headers = {"Cookie": cookies};
 
     // Make the request
-    var template = new UriTemplate(
-        "https://tiss.tuwien.ac.at/api/person/v22/psuche?q={query}&max_treffer=100&preview_picture_uri=true&intern=true&locale=de");
-    String apiUri = template.expand({'query': query});
-    http.Response res = await http.get(apiUri, headers: headers);
+    Uri apiSearchUri =
+        Uri.https("tiss.tuwien.ac.at", "/api/person/v22/psuche", {
+      "q": query,
+      "max_treffer": "100",
+      "preview_picture_uri": "true",
+      "intern": "true",
+      "locale": "de",
+    });
+    http.Response res = await http.get(apiSearchUri, headers: headers);
     return res;
   }
 
   // Tries to download the results from TISS, returns null if the mission went
   // sideways.
-  Future<Tiss> _getData(String query) async {
+  Future<Tiss?> _getData(String query) async {
     // Check the cache
     if (_cache.containsKey(query)) return _cache[query];
 
@@ -68,9 +72,7 @@ class PersonSearch extends SearchDelegate<Person> {
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    assert(context != null);
     final ThemeData theme = Theme.of(context);
-    assert(theme != null);
     return theme.copyWith(
       primaryColor: theme.cardColor,
       primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.grey),
@@ -104,14 +106,14 @@ class PersonSearch extends SearchDelegate<Person> {
 
   @override
   Widget buildResults(BuildContext context) {
-    Future<Tiss> data = _getData(query);
+    Future<Tiss?> data = _getData(query);
     _suggestionManager.addSuggestion(query);
 
     return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
-      return FutureBuilder<Tiss>(
+      return FutureBuilder<Tiss?>(
           future: data,
-          builder: (BuildContext context, AsyncSnapshot<Tiss> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<Tiss?> snapshot) {
             // Check for errors
             if (snapshot.hasError) {
               return SafeArea(
@@ -122,12 +124,13 @@ class PersonSearch extends SearchDelegate<Person> {
                       children: [
                         Text(
                           "✈️",
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline3
-                                    .fontSize,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .headline3!
+                                        .fontSize,
+                                  ),
                         ),
                         Text(
                           "Ein Fehler ist aufgetreten beim Laden der Daten.",
@@ -148,7 +151,7 @@ class PersonSearch extends SearchDelegate<Person> {
             }
 
             // Check if the server answered successfully
-            Tiss data = snapshot.data;
+            Tiss? data = snapshot.data;
             if (data == null) {
               return Center(
                   child:
@@ -165,12 +168,13 @@ class PersonSearch extends SearchDelegate<Person> {
                       children: [
                         Text(
                           _getNoResultEmoji(),
-                          style: Theme.of(context).textTheme.bodyText1.copyWith(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline3
-                                    .fontSize,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .headline3!
+                                        .fontSize,
+                                  ),
                         ),
                         Text(
                           "Niemanden gefunden.",
@@ -310,7 +314,12 @@ class PersonSearch extends SearchDelegate<Person> {
               (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
             if (!snapshot.hasData) return Container();
 
-            List<String> data = snapshot.data;
+            List<String> data;
+            if (snapshot.data == null) {
+              data = [];
+            } else {
+              data = snapshot.data!;
+            }
 
             return ListView.separated(
                 itemCount: data.length,

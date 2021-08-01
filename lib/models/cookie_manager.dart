@@ -9,8 +9,8 @@ class CookieManager {
   CookieManager();
 
   void addFromResponse(http.BaseResponse resp) {
-    String host = resp.request.url.host;
-    String rawCookies = resp.headers['set-cookie'];
+    String host = resp.request!.url.host;
+    String? rawCookies = resp.headers['set-cookie'];
     if (rawCookies == null || rawCookies == "") return;
 
     List<String> cookies = rawCookies.split(",");
@@ -23,7 +23,7 @@ class CookieManager {
       String cookieData = cookie.split("=")[1];
 
       if (!_data.containsKey(host)) _data[host] = Map();
-      _data[host][cookieName] = cookieData;
+      _data[host]![cookieName] = cookieData;
     }
   }
 
@@ -31,7 +31,7 @@ class CookieManager {
     String cookie = "";
     if (!_data.containsKey(url.host)) return "";
 
-    _data[url.host].forEach((k, v) {
+    _data[url.host]!.forEach((k, v) {
       cookie += k + "=" + v + ";";
     });
 

@@ -34,7 +34,7 @@ class PersonScreen extends StatelessWidget {
           cards++;
         }
         if (person.employee != null) {
-          cards += person.employee.length;
+          cards += person.employee!.length;
         }
 
         return ListView.builder(
@@ -61,7 +61,7 @@ class PersonScreen extends StatelessWidget {
 
             return Padding(
                 padding: cardPadding,
-                child: EmployeeCard(person.employee[empployeeIndex]));
+                child: EmployeeCard(person.employee![empployeeIndex]));
           },
         );
       }),

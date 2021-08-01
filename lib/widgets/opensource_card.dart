@@ -37,21 +37,20 @@ class OpenSourceCard extends StatelessWidget {
           ),
           ButtonBar(
             buttonTextTheme: ButtonTextTheme.accent,
-            alignment: MainAxisAlignment.start,
             children: [
-              OutlineButton(
+              TextButton(
+                  onPressed: () {
+                    launchInBrowser(
+                        "https://github.com/flofriday/TU_Wien_Addressbook/blob/master/LICENSE");
+                  },
+                  child: Text("MIT Lizenz")),
+              OutlinedButton(
                   onPressed: () {
                     launchInBrowser(
                         "https://github.com/flofriday/TU_Wien_Addressbook");
                   },
                   //icon: FaIcon(FontAwesomeIcons.github),
                   child: Text("GitHub")),
-              FlatButton(
-                  onPressed: () {
-                    launchInBrowser(
-                        "https://github.com/flofriday/TU_Wien_Addressbook/blob/master/LICENSE");
-                  },
-                  child: Text("MIT Lizenz"))
             ],
           )
         ],

@@ -1,53 +1,53 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:uri/uri.dart';
-import 'package:html_character_entities/html_character_entities.dart';
 
 part 'person.g.dart';
 
-@JsonSerializable(nullable: true)
+// To build the code generateion run:
+// flutter pub run build_runner build
+@JsonSerializable()
 class Person {
   @JsonKey(name: 'first_name')
-  String firstName;
+  String firstName = "";
 
   @JsonKey(name: 'last_name')
-  String lastName;
+  String lastName = "";
 
-  String gender;
+  String? gender;
 
   @JsonKey(name: 'preceding_titles')
-  String precedingTitles;
+  String? precedingTitles;
 
   @JsonKey(name: 'postpositioned_titles')
-  String postpositionedTitles;
+  String? postpositionedTitles;
 
   @JsonKey(name: 'card_uri')
-  String tissUri;
+  String tissUri = "";
 
   @JsonKey(name: 'picture_uri')
-  String pictureUri;
+  String? pictureUri;
 
   @JsonKey(name: 'preview_picture_uri')
-  String previewPictureUri;
+  String? previewPictureUri;
 
   @JsonKey(name: 'main_email')
-  String email;
+  String? email;
 
   @JsonKey(name: 'other_emails')
-  List<String> otherEmails;
+  List<String>? otherEmails;
 
   @JsonKey(name: 'main_phone_number')
-  String phoneNumber;
+  String? phoneNumber;
 
   // This text is HTML encoded!
   // I know, its cracy but you need to use getAdditionalInfos if you want to
   // get it decoded.
   //@JsonKey(name: 'additional_infos', includeIfNull: false)
   @JsonKey(name: 'additional_infos')
-  List<String> rawAdditionalInfos;
+  List<String>? rawAdditionalInfos;
 
-  List<Employee> employee;
-  Student student;
+  List<Employee>? employee;
+  Student? student;
 
   Person();
 
@@ -63,11 +63,11 @@ class Person {
     String name = this.firstName + " " + this.lastName;
 
     if (this.precedingTitles != null) {
-      name = precedingTitles + " " + name;
+      name = precedingTitles! + " " + name;
     }
 
     if (this.postpositionedTitles != null) {
-      name += " " + this.postpositionedTitles;
+      name += " " + this.postpositionedTitles!;
     }
 
     return name;
@@ -81,20 +81,16 @@ class Person {
     else if (this.gender == 'W')
       return "weiblich";
     else
-      return this.gender;
+      return this.gender!;
   }
 
   String getTissUrl() {
-    if (this.tissUri != null) {
-      return "https://tiss.tuwien.ac.at" + this.tissUri;
-    }
-
-    return null;
+    return "https://tiss.tuwien.ac.at" + this.tissUri;
   }
 
   String getPictureUrl() {
     if (this.pictureUri != null) {
-      return "https://tiss.tuwien.ac.at" + this.pictureUri;
+      return "https://tiss.tuwien.ac.at" + this.pictureUri!;
     }
 
     return "https://www.tuwien.at/apple-touch-icon.png";
@@ -102,7 +98,7 @@ class Person {
 
   String getPreviewPictureUrl() {
     if (this.pictureUri != null) {
-      return "https://tiss.tuwien.ac.at" + this.previewPictureUri;
+      return "https://tiss.tuwien.ac.at" + this.previewPictureUri!;
     }
 
     return "https://www.tuwien.at/apple-touch-icon.png";
@@ -119,13 +115,13 @@ class Person {
       description = this.gender == "W" ? "Mitarbeiterin" : "Mitarbeiter";
     } else if (this.student != null) {
       description = this.gender == "W" ? "Studentin" : "Student";
-      description += ", seit ${this.student.getMatriculationYear()}";
+      description += ", seit ${this.student!.getMatriculationYear()}";
     } else {
       description = "keine Information";
     }
 
     if (this.employee != null) {
-      for (Employee e in this.employee) {
+      for (Employee e in this.employee!) {
         description += ", ${e.function}";
       }
     }
@@ -141,7 +137,7 @@ class Person {
   }
 }
 
-@JsonSerializable(nullable: true)
+@JsonSerializable()
 class Student {
   @JsonKey(name: 'matriculation_number')
   String matriculationNumber;
@@ -161,19 +157,19 @@ class Student {
   }
 }
 
-@JsonSerializable(nullable: true)
+@JsonSerializable()
 class Employee {
   @JsonKey(name: 'org_ref')
-  Organisation orgRef;
+  Organisation orgRef = Organisation();
 
-  String function;
+  String function = "";
 
-  Room room;
+  Room? room;
 
   @JsonKey(name: 'phone_numbers')
-  List<String> phoneNumbers;
+  List<String>? phoneNumbers;
 
-  List<Website> websites;
+  List<Website>? websites;
 
   Employee();
 
@@ -183,13 +179,13 @@ class Employee {
   Map<String, dynamic> toJson() => _$EmployeeToJson(this);
 }
 
-@JsonSerializable(nullable: true)
+@JsonSerializable()
 class Organisation {
   @JsonKey(name: 'tiss_id')
-  int tissId;
+  int tissId = 0;
 
   @JsonKey(name: 'name_de')
-  String name;
+  String name = "";
 
   Organisation();
 
@@ -204,12 +200,12 @@ class Organisation {
   }
 }
 
-@JsonSerializable(nullable: true)
+@JsonSerializable()
 class Room {
   @JsonKey(name: 'room_code')
-  String roomCode;
+  String roomCode = "";
 
-  Address address;
+  Address address = Address();
 
   Room();
 
@@ -228,16 +224,16 @@ class Room {
   }
 }
 
-@JsonSerializable(nullable: true)
+@JsonSerializable()
 class Address {
-  String street;
+  String street = "";
 
   @JsonKey(name: 'zip_code')
-  String zipCode;
+  String zipCode = "";
 
-  String city;
+  String city = "";
 
-  String country;
+  String country = "";
 
   Address();
 
@@ -253,11 +249,11 @@ class Address {
   }
 }
 
-@JsonSerializable(nullable: true)
+@JsonSerializable()
 class Website {
-  String uri;
+  String uri = "";
 
-  String title;
+  String title = "";
 
   Website();
 

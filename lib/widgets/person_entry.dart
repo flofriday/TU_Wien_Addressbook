@@ -4,7 +4,7 @@ import 'package:tu_wien_addressbook/widgets/person_avatar.dart';
 
 class PersonEntry extends StatelessWidget {
   final Person person;
-  final GestureTapCallback onTap;
+  final GestureTapCallback? onTap;
 
   const PersonEntry(this.person, {this.onTap});
 

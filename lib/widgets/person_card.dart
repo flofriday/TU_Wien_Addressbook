@@ -28,24 +28,22 @@ class PersonInfoCard extends StatelessWidget {
                 SimpleTile(title: "Name", subtitle: person.getNameWithTitles()),
                 SimpleTile(title: "Geschlecht", subtitle: person.getGender()),
                 if (person.email != null)
-                  SimpleTile(title: "Email", subtitle: person.email),
-                if (person.otherEmails != null && person.otherEmails.isNotEmpty)
-                  ...person.otherEmails.map((email) => SimpleTile(
+                  SimpleTile(title: "Email", subtitle: person.email!),
+                if (person.otherEmails != null &&
+                    person.otherEmails!.isNotEmpty)
+                  ...person.otherEmails!.map((email) => SimpleTile(
                         title: "Weitere Email",
                         subtitle: email,
                       )),
                 if (person.phoneNumber != null)
-                  SimpleTile(title: "Telefon", subtitle: person.phoneNumber),
-                if (person.phoneNumber != null ||
-                    person.email != null ||
-                    person.tissUri != null)
+                  SimpleTile(title: "Telefon", subtitle: person.phoneNumber!),
+                if (person.phoneNumber != null || person.email != null)
                   Padding(
                     padding: EdgeInsets.all(8),
                     child: Row(children: [
                       if (person.phoneNumber != null)
                         Expanded(
-                          child: FlatButton(
-                            textColor: Theme.of(context).accentColor,
+                          child: TextButton(
                             child: Column(
                               children: [
                                 Icon(Icons.phone),
@@ -56,14 +54,13 @@ class PersonInfoCard extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
-                              launchPhone(person.phoneNumber);
+                              launchPhone(person.phoneNumber!);
                             },
                           ),
                         ),
                       if (person.email != null)
                         Expanded(
-                          child: FlatButton(
-                            textColor: Theme.of(context).accentColor,
+                          child: TextButton(
                             child: Column(
                               children: [
                                 Icon(Icons.mail),
@@ -76,15 +73,15 @@ class PersonInfoCard extends StatelessWidget {
                             onPressed: () async {
                               // Open the email app if there is only one email
                               if (person.otherEmails == null ||
-                                  person.otherEmails.isEmpty) {
-                                launchEmail(person.email, "",
+                                  person.otherEmails!.isEmpty) {
+                                launchEmail(person.email!, "",
                                     person.getNameWithTitles());
                                 return;
                               }
 
                               // Open a bottom modal sheet to ask the user to select
                               // their prefered email.
-                              String choice = await showModalBottomSheet(
+                              String? choice = await showModalBottomSheet(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.vertical(
                                         top: Radius.circular(10)),
@@ -102,14 +99,14 @@ class PersonInfoCard extends StatelessWidget {
                                                     .headline6),
                                           ),
                                           ListTile(
-                                            title: Text(person.email),
+                                            title: Text(person.email!),
                                             subtitle: Text("Haupt Email"),
                                             onTap: () {
                                               Navigator.pop(
                                                   context, person.email);
                                             },
                                           ),
-                                          ...person.otherEmails.map(
+                                          ...person.otherEmails!.map(
                                             (email) => ListTile(
                                               title: Text(email),
                                               subtitle: Text("Weitere Email"),
@@ -134,8 +131,7 @@ class PersonInfoCard extends StatelessWidget {
                         ),
                       if (person.tissUri != null)
                         Expanded(
-                          child: FlatButton(
-                            textColor: Theme.of(context).accentColor,
+                          child: TextButton(
                             child: Column(
                               children: [
                                 Icon(Icons.school),
@@ -190,11 +186,10 @@ class PersonInfoCard extends StatelessWidget {
                         ),
                         flightShuttleBuilder: (flightContext, animation,
                             direction, fromContext, toContext) {
-                          print(animation.value);
                           return AnimatedBuilder(
                               animation: animation,
                               builder:
-                                  (BuildContext flightContext, Widget child) {
+                                  (BuildContext flightContext, Widget? child) {
                                 return ClipRRect(
                                   borderRadius: BorderRadius.circular(
                                       100 * -(animation.value - 1)),
@@ -223,11 +218,6 @@ class PersonInfoCard extends StatelessWidget {
                               );
                             },
                           ),
-                          /*MaterialPageRoute(
-                            builder: (context) => ImageScreen(
-                                person.getPictureUrl(),
-                                "${person.firstName} ${person.lastName}"),
-                          ),*/
                         );
                       },
                     ),

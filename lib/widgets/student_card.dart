@@ -19,11 +19,11 @@ class StudentCard extends StatelessWidget {
           children: <Widget>[
             SimpleTile(
               title: person.gender == "W" ? "Studentin" : "Student",
-              subtitle: "seit ${person.student.getMatriculationYear()}",
+              subtitle: "seit ${person.student!.getMatriculationYear()}",
             ),
             SimpleTile(
               title: "Matrikelnummer",
-              subtitle: person.student.matriculationNumber,
+              subtitle: person.student!.matriculationNumber,
             ),
           ],
         ),

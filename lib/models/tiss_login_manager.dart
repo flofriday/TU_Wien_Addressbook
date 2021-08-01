@@ -9,7 +9,7 @@ class _MyRequest extends http.Request {
   Map<String, String> headers;
 
   /// A constructor similar to http.Request but, that allows you to set headers.
-  _MyRequest(String method, Uri url, {Map<String, String> headers})
+  _MyRequest(String method, Uri url, {required Map<String, String> headers})
       : this.headers = headers,
         super(method, url);
 }
@@ -27,29 +27,29 @@ class _MyRequest extends http.Request {
 /// (in milliseconds since epoche) with the key 'tisscookietime'.
 class TissLoginManager {
   Future<SharedPreferences> futurePrefs = SharedPreferences.getInstance();
-  Future<String> tissCookies;
+  Future<String>? tissCookies;
 
   TissLoginManager() {
     print("Loading cookies...");
-    tissCookies = _loadCookies();
+    this.tissCookies = _loadCookies();
   }
 
-  Future<String> getCookies() async {
+  Future<String>? getCookies() {
     return tissCookies;
   }
 
   Future<String> _loadCookies() async {
     // STEP 0: Check if there are existing cookies
     SharedPreferences prefs = await futurePrefs;
-    String savedTissCookie = prefs.getString('tisscookie');
-    int rawDateTime = prefs.getInt('tisscookietime');
+    String? savedTissCookie = prefs.getString('tisscookie');
+    int? rawDateTime = prefs.getInt('tisscookietime');
 
     // Check if there is any data in the prefrences
     if (savedTissCookie != null &&
         savedTissCookie != "" &&
         rawDateTime != null) {
       DateTime savedTissCookieTime =
-          DateTime.fromMillisecondsSinceEpoch(prefs.getInt('tisscookietime'));
+          DateTime.fromMillisecondsSinceEpoch(prefs.getInt('tisscookietime')!);
 
       if (DateTime.now().difference(savedTissCookieTime).inSeconds <
           Duration(minutes: 30).inSeconds) {
@@ -59,8 +59,8 @@ class TissLoginManager {
 
     // Check if there is a saved username and password.
     // Because if not we don't need to try to login
-    String user = prefs.getString('username');
-    String password = prefs.getString('password');
+    String? user = prefs.getString('username');
+    String? password = prefs.getString('password');
     if (user == null || user == "" || password == null || password == "") {
       print('No password or user');
       return "";
@@ -85,26 +85,25 @@ class TissLoginManager {
       if (!resp.isRedirect) {
         break;
       } else {
-        sessionUrl = resp.headers['location'];
+        sessionUrl = resp.headers['location']!;
         if (sessionUrl.startsWith("/")) {
-          sessionUrl = resp.request.url.origin + sessionUrl;
+          sessionUrl = resp.request!.url.origin + sessionUrl;
         }
-        if (sessionUrl == null) break;
       }
     }
 
     // Now we got the final url, so lets extract the AuthState from the url
-    String authState = Uri.parse(sessionUrl).queryParameters['AuthState'];
+    String authState = Uri.parse(sessionUrl).queryParameters['AuthState']!;
 
     // STEP 2: Send a POST request to get the first TU Wien cookie, which we need
     //to get the second TU Wien cookie
 
-    String url =
-        "https://idp.zid.tuwien.ac.at/simplesaml/module.php/core/loginuserpass.php";
+    Uri url = Uri.parse(
+        "https://idp.zid.tuwien.ac.at/simplesaml/module.php/core/loginuserpass.php");
 
     var headers = {
       "Content-Type": "application/x-www-form-urlencoded",
-      "Cookie": cookieJar.getForUrl(Uri.parse(url))
+      "Cookie": cookieJar.getForUrl(url)
     };
 
     var requestBody = {
@@ -142,18 +141,18 @@ class TissLoginManager {
 
     // STEP 3: Make a second POST request to get the second TU Wien cookie, so
     // we can get the TISS cookie
-    url = "https://login.tuwien.ac.at/auth/postResponse";
+    url = Uri.parse("https://login.tuwien.ac.at/auth/postResponse");
 
     headers = {
       "Content-Type": "application/x-www-form-urlencoded",
-      "Cookie": cookieJar.getForUrl(Uri.parse(url)),
+      "Cookie": cookieJar.getForUrl(url),
     };
 
     requestBody = {
       'SAMLResponse': samlResponse,
       'RelayState': relayState,
     };
-    http.Request request = _MyRequest('POST', Uri.parse(url), headers: headers);
+    http.Request request = _MyRequest('POST', url, headers: headers);
     request.followRedirects = false;
     request.bodyFields = requestBody;
     http.StreamedResponse streamResponse = await client.send(request);
@@ -161,11 +160,11 @@ class TissLoginManager {
 
     if (!streamResponse.isRedirect) return "";
     print("location: ${streamResponse.headers}");
-    print("headers: ${streamResponse.request.headers}");
+    print("headers: ${streamResponse.request!.headers}");
     print("status: ${streamResponse.statusCode}");
 
     // STEP 4: Now we need to get the TISS cookie
-    sessionUrl = streamResponse.headers['location'];
+    sessionUrl = streamResponse.headers['location']!;
     while (true) {
       var headers = {"Cookie": cookieJar.getForUrl(Uri.parse(sessionUrl))};
       http.BaseRequest req =
@@ -177,7 +176,7 @@ class TissLoginManager {
       if (!resp.isRedirect) {
         break;
       } else {
-        sessionUrl = resp.headers['location'];
+        sessionUrl = resp.headers['location']!;
         print("Redirect to: ${resp.headers['location']}");
         if (sessionUrl == null) break;
       }

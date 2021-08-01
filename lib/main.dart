@@ -17,7 +17,6 @@ class App extends StatelessWidget {
       locale: Locale('de', 'AT'),
       theme: ThemeData(
         accentColor: Colors.indigo[400],
-        //accentColor: Colors.teal,
         primarySwatch: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.blueGrey[50],
         cardTheme: CardTheme(
@@ -26,8 +25,8 @@ class App extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        accentColor: Colors.cyan,
-        primarySwatch: Colors.blueGrey,
+        accentColor: Colors.blue,
+        primarySwatch: Colors.blue,
         //scaffoldBackgroundColor: Colors.blueGrey[50],
         cardTheme: CardTheme(
             shape: RoundedRectangleBorder(
@@ -40,7 +39,7 @@ class App extends StatelessWidget {
 }
 
 class MainPage extends StatefulWidget {
-  MainPage({Key key, this.title}) : super(key: key);
+  MainPage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -58,7 +57,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Person person;
+  Person? person;
   Future<SharedPreferences> futurePrefs = SharedPreferences.getInstance();
 
   @override
@@ -105,11 +104,13 @@ class HomeScreen extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.all(16),
-            child: RaisedButton(
+            child: ElevatedButton(
+              /*
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(100.0),
               ),
               color: Theme.of(context).cardColor,
+              */
               onPressed: () {
                 showSearch(context: context, delegate: PersonSearch());
               },
@@ -142,7 +143,7 @@ class HomeScreen extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                   style: DefaultTextStyle.of(context).style.copyWith(
-                      fontSize: Theme.of(context).textTheme.caption.fontSize),
+                      fontSize: Theme.of(context).textTheme.caption!.fontSize),
                   children: [
                     TextSpan(
                       text: "Made with ❤️ by ",

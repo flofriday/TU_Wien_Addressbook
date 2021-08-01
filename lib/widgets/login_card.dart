@@ -21,7 +21,7 @@ class LoginCard extends StatelessWidget {
                   AsyncSnapshot<SharedPreferences> snapshot) {
                 if (!snapshot.hasData) return Center(child: Text('Loading...'));
 
-                SharedPreferences prefs = snapshot.data;
+                SharedPreferences? prefs = snapshot.data;
 
                 return Column(mainAxisSize: MainAxisSize.min, children: [
                   TextField(
@@ -30,7 +30,7 @@ class LoginCard extends StatelessWidget {
                       labelText: 'Username',
                     ),
                     controller: TextEditingController()
-                      ..text = prefs.getString('username'),
+                      ..text = prefs!.getString('username')!,
                     onChanged: (String value) async {
                       await prefs.setString('username', value);
                       await prefs.remove('tisscookie');
@@ -44,7 +44,7 @@ class LoginCard extends StatelessWidget {
                     ),
                     obscureText: true,
                     controller: TextEditingController()
-                      ..text = prefs.getString('password'),
+                      ..text = prefs!.getString('password')!,
                     onChanged: (String value) async {
                       await prefs.setString('password', value);
                       await prefs.remove('tisscookie');

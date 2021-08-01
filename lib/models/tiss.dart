@@ -3,7 +3,7 @@ import 'package:tu_wien_addressbook/models/person.dart';
 
 part 'tiss.g.dart';
 
-@JsonSerializable(nullable: false)
+@JsonSerializable()
 class Tiss {
   String query;
 
@@ -12,7 +12,8 @@ class Tiss {
 
   List<Person> results;
 
-  Tiss();
+  Tiss(
+      {required this.query, required this.totalResults, required this.results});
 
   factory Tiss.fromJson(Map<String, dynamic> json) => _$TissFromJson(json);
 

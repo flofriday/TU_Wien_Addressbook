@@ -10,22 +10,23 @@ Person _$PersonFromJson(Map<String, dynamic> json) {
   return Person()
     ..firstName = json['first_name'] as String
     ..lastName = json['last_name'] as String
-    ..gender = json['gender'] as String
-    ..precedingTitles = json['preceding_titles'] as String
-    ..postpositionedTitles = json['postpositioned_titles'] as String
+    ..gender = json['gender'] as String?
+    ..precedingTitles = json['preceding_titles'] as String?
+    ..postpositionedTitles = json['postpositioned_titles'] as String?
     ..tissUri = json['card_uri'] as String
-    ..pictureUri = json['picture_uri'] as String
-    ..previewPictureUri = json['preview_picture_uri'] as String
-    ..email = json['main_email'] as String
-    ..otherEmails =
-        (json['other_emails'] as List)?.map((e) => e as String)?.toList()
-    ..phoneNumber = json['main_phone_number'] as String
-    ..rawAdditionalInfos =
-        (json['additional_infos'] as List)?.map((e) => e as String)?.toList()
-    ..employee = (json['employee'] as List)
-        ?.map((e) =>
-            e == null ? null : Employee.fromJson(e as Map<String, dynamic>))
-        ?.toList()
+    ..pictureUri = json['picture_uri'] as String?
+    ..previewPictureUri = json['preview_picture_uri'] as String?
+    ..email = json['main_email'] as String?
+    ..otherEmails = (json['other_emails'] as List<dynamic>?)
+        ?.map((e) => e as String)
+        .toList()
+    ..phoneNumber = json['main_phone_number'] as String?
+    ..rawAdditionalInfos = (json['additional_infos'] as List<dynamic>?)
+        ?.map((e) => e as String)
+        .toList()
+    ..employee = (json['employee'] as List<dynamic>?)
+        ?.map((e) => Employee.fromJson(e as Map<String, dynamic>))
+        .toList()
     ..student = json['student'] == null
         ? null
         : Student.fromJson(json['student'] as Map<String, dynamic>);
@@ -60,19 +61,17 @@ Map<String, dynamic> _$StudentToJson(Student instance) => <String, dynamic>{
 
 Employee _$EmployeeFromJson(Map<String, dynamic> json) {
   return Employee()
-    ..orgRef = json['org_ref'] == null
-        ? null
-        : Organisation.fromJson(json['org_ref'] as Map<String, dynamic>)
+    ..orgRef = Organisation.fromJson(json['org_ref'] as Map<String, dynamic>)
     ..function = json['function'] as String
     ..room = json['room'] == null
         ? null
         : Room.fromJson(json['room'] as Map<String, dynamic>)
-    ..phoneNumbers =
-        (json['phone_numbers'] as List)?.map((e) => e as String)?.toList()
-    ..websites = (json['websites'] as List)
-        ?.map((e) =>
-            e == null ? null : Website.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+    ..phoneNumbers = (json['phone_numbers'] as List<dynamic>?)
+        ?.map((e) => e as String)
+        .toList()
+    ..websites = (json['websites'] as List<dynamic>?)
+        ?.map((e) => Website.fromJson(e as Map<String, dynamic>))
+        .toList();
 }
 
 Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
@@ -98,9 +97,7 @@ Map<String, dynamic> _$OrganisationToJson(Organisation instance) =>
 Room _$RoomFromJson(Map<String, dynamic> json) {
   return Room()
     ..roomCode = json['room_code'] as String
-    ..address = json['address'] == null
-        ? null
-        : Address.fromJson(json['address'] as Map<String, dynamic>);
+    ..address = Address.fromJson(json['address'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$RoomToJson(Room instance) => <String, dynamic>{

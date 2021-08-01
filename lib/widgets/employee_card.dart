@@ -25,22 +25,22 @@ class EmployeeCard extends StatelessWidget {
             ),
             if (employee.room != null)
               SimpleTile(
-                title: "Raum " + employee.room.roomCode,
-                subtitle: employee.room.address.toString(),
+                title: "Raum " + employee.room!.roomCode,
+                subtitle: employee.room!.address.toString(),
               ),
             Builder(builder: (BuildContext context) {
               if (employee.phoneNumbers == null) return Container();
 
-              int numPhones = employee.phoneNumbers.length;
+              int numPhones = employee.phoneNumbers!.length;
 
-              List<Widget> widgets = List();
+              List<Widget> widgets = [];
               for (int i = 0; i < numPhones; i++) {
                 String title = "Telefon";
                 if (numPhones > 1) {
                   title += " ${i + 1}";
                 }
                 widgets.add(SimpleTile(
-                    title: title, subtitle: employee.phoneNumbers[i]));
+                    title: title, subtitle: employee.phoneNumbers![i]));
               }
 
               return Column(
@@ -51,16 +51,16 @@ class EmployeeCard extends StatelessWidget {
             Builder(builder: (BuildContext context) {
               if (employee.websites == null) return Container();
 
-              int numWebsites = employee.websites.length;
+              int numWebsites = employee.websites!.length;
 
-              List<Widget> widgets = List();
+              List<Widget> widgets = [];
               for (int i = 0; i < numWebsites; i++) {
                 String title = "Webseite";
                 if (numWebsites > 1) {
                   title += " ${i + 1}";
                 }
                 widgets.add(SimpleTile(
-                    title: title, subtitle: employee.websites[i].uri));
+                    title: title, subtitle: employee.websites![i].uri));
               }
 
               return Column(
@@ -73,8 +73,7 @@ class EmployeeCard extends StatelessWidget {
               child: Row(children: [
                 if (employee.phoneNumbers != null)
                   Expanded(
-                    child: FlatButton(
-                      textColor: Theme.of(context).accentColor,
+                    child: TextButton(
                       child: Column(
                         children: [
                           Icon(Icons.phone),
@@ -88,8 +87,8 @@ class EmployeeCard extends StatelessWidget {
                       ),
                       onPressed: () async {
                         // Launch the phone app if there is just one numner
-                        if (employee.phoneNumbers.length == 1) {
-                          launchPhone(employee.phoneNumbers[0]);
+                        if (employee.phoneNumbers!.length == 1) {
+                          launchPhone(employee.phoneNumbers![0]);
                           return;
                         }
 
@@ -112,7 +111,7 @@ class EmployeeCard extends StatelessWidget {
                                                 .textTheme
                                                 .headline6),
                                       ),
-                                      ...employee.phoneNumbers.map(
+                                      ...employee.phoneNumbers!.map(
                                         (phone) => ListTile(
                                           title: Text(phone),
                                           onTap: () {
@@ -134,8 +133,7 @@ class EmployeeCard extends StatelessWidget {
                   ),
                 if (employee.websites != null)
                   Expanded(
-                    child: FlatButton(
-                      textColor: Theme.of(context).accentColor,
+                    child: TextButton(
                       child: Column(
                         children: [
                           Icon(Icons.public),
@@ -149,8 +147,8 @@ class EmployeeCard extends StatelessWidget {
                       ),
                       onPressed: () async {
                         // Launch the phone app if there is just one numner
-                        if (employee.websites.length == 1) {
-                          launchInBrowser(employee.websites[0].uri);
+                        if (employee.websites!.length == 1) {
+                          launchInBrowser(employee.websites![0].uri);
                           return;
                         }
 
@@ -173,7 +171,7 @@ class EmployeeCard extends StatelessWidget {
                                               .textTheme
                                               .headline6),
                                     ),
-                                    ...employee.websites.map(
+                                    ...employee.websites!.map(
                                       (website) => ListTile(
                                         title: Text(website.uri),
                                         onTap: () {
@@ -196,8 +194,7 @@ class EmployeeCard extends StatelessWidget {
                   ),
                 if (employee.room != null)
                   Expanded(
-                    child: FlatButton(
-                      textColor: Theme.of(context).accentColor,
+                    child: TextButton(
                       child: Column(
                         children: [
                           Icon(Icons.map),
@@ -210,30 +207,28 @@ class EmployeeCard extends StatelessWidget {
                         ],
                       ),
                       onPressed: () {
-                        launchInBrowser(employee.room.getMapUrl());
+                        launchInBrowser(employee.room!.getMapUrl());
                       },
                     ),
                   ),
-                if (employee.orgRef != null && employee.orgRef.tissId != null)
-                  Expanded(
-                    child: FlatButton(
-                      textColor: Theme.of(context).accentColor,
-                      child: Column(
-                        children: [
-                          Icon(Icons.school),
-                          Text(
-                            "TISS",
-                            style: Theme.of(context).textTheme.caption,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                      onPressed: () {
-                        launchInBrowser(employee.orgRef.getTissUrl());
-                      },
+                Expanded(
+                  child: TextButton(
+                    child: Column(
+                      children: [
+                        Icon(Icons.school),
+                        Text(
+                          "TISS",
+                          style: Theme.of(context).textTheme.caption,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
+                    onPressed: () {
+                      launchInBrowser(employee.orgRef.getTissUrl());
+                    },
                   ),
+                ),
               ]),
             ),
           ]),

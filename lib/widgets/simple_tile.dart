@@ -4,7 +4,7 @@ class SimpleTile extends StatelessWidget {
   final String title;
   final String subtitle;
 
-  SimpleTile({this.title, this.subtitle});
+  SimpleTile({required this.title, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +19,8 @@ class SimpleTile extends StatelessWidget {
           SelectableText(title, style: theme.textTheme.subtitle1),
           SelectableText(
             subtitle,
-            style: theme.textTheme.bodyText2
-                .copyWith(color: theme.textTheme.caption.color),
+            style: theme.textTheme.bodyText2!
+                .copyWith(color: theme.textTheme.caption!.color),
           ),
         ],
       ),

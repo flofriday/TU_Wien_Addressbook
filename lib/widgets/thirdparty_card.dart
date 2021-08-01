@@ -17,22 +17,26 @@ class ThridPartyCard extends StatelessWidget {
             subtitle: Text(
                 "Diese Bibliotheken haben mir geholfen die App zu entwickeln."),
           ),
-          FlatButton(
-            textTheme: ButtonTextTheme.accent,
-            onPressed: () async {
-              PackageInfo packageInfo = await PackageInfo.fromPlatform();
-              showLicensePage(
-                context: context,
-                applicationName: packageInfo.appName,
-                applicationVersion: packageInfo.version,
-                applicationIcon: Image(
-                  image: AssetImage('logo_small.png'),
-                  height: 100,
-                ),
-              );
-            },
-            child: Text("Lizenzen"),
-          )
+          ButtonBar(
+            children: [
+              OutlinedButton(
+                //textTheme: ButtonTextTheme.accent,
+                onPressed: () async {
+                  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+                  showLicensePage(
+                    context: context,
+                    applicationName: packageInfo.appName,
+                    applicationVersion: packageInfo.version,
+                    applicationIcon: Image(
+                      image: AssetImage('logo_small.png'),
+                      height: 100,
+                    ),
+                  );
+                },
+                child: Text("Lizenzen"),
+              ),
+            ],
+          ),
         ],
       ),
     );
