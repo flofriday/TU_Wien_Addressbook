@@ -129,23 +129,22 @@ class PersonInfoCard extends StatelessWidget {
                             },
                           ),
                         ),
-                      if (person.tissUri != null)
-                        Expanded(
-                          child: TextButton(
-                            child: Column(
-                              children: [
-                                Icon(Icons.school),
-                                Text(
-                                  "TISS",
-                                  style: Theme.of(context).textTheme.caption,
-                                ),
-                              ],
-                            ),
-                            onPressed: () {
-                              launchInBrowser(person.getTissUrl());
-                            },
+                      Expanded(
+                        child: TextButton(
+                          child: Column(
+                            children: [
+                              Icon(Icons.school),
+                              Text(
+                                "TISS",
+                                style: Theme.of(context).textTheme.caption,
+                              ),
+                            ],
                           ),
+                          onPressed: () {
+                            launchInBrowser(person.getTissUrl());
+                          },
                         ),
+                      ),
                     ]),
                   ),
               ],

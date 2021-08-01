@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 class PersonSearch extends SearchDelegate<Null> {
   TissLoginManager _tissManager = TissLoginManager();
   SuggestionManager _suggestionManager = SuggestionManager();
-  Map<String, Tiss> _cache = Map();
+  Map<String, List<Person>> _cache = Map();
   bool _employeeFilter = false;
   bool _studentFilter = false;
   bool _femaleFilter = false;
@@ -34,7 +34,8 @@ class PersonSearch extends SearchDelegate<Null> {
     return emojis[(_rng.nextInt(emojis.length))];
   }
 
-  Future<http.Response> _makeRequest(String query) async {
+  /// Make a request to search for the name of a person
+  Future<http.Response> _makePersonRequest(String query) async {
     // Get the Cookies
     String cookies = await _tissManager.getCookies()!;
     var headers = {"Cookie": cookies};
@@ -52,31 +53,77 @@ class PersonSearch extends SearchDelegate<Null> {
     return res;
   }
 
+  /// Make a request to search for a person by their matriculation number
+  Future<http.Response> _makeMnrRequest(String query) async {
+    // Get the Cookies
+    String cookies = await _tissManager.getCookies()!;
+    var headers = {"Cookie": cookies};
+
+    // Make the request
+    Uri apiSearchUri =
+        Uri.https("tiss.tuwien.ac.at", "/api/person/v22/mnr/$query", {
+      "preview_picture_uri": "true",
+      "intern": "true",
+      "locale": "de",
+    });
+    http.Response res = await http.get(apiSearchUri, headers: headers);
+    return res;
+  }
+
   // Tries to download the results from TISS, returns null if the mission went
   // sideways.
-  Future<Tiss?> _getData(String query) async {
+  Future<List<Person>?> _getData(String query) async {
     // Check the cache
     if (_cache.containsKey(query)) return _cache[query];
 
     // Since we get new data now, we should reset the position of the scroll
     _scrollOffset = 0;
 
-    // Make the request
-    http.Response resp = await _makeRequest(query);
-    if (resp.statusCode != 200) return null;
+    // Check if the query is a matriculation number
+    RegExp mrnRegex = RegExp("[01]?[0-9]{7}");
+    if (mrnRegex.hasMatch(query)) {
+      // Load by matriculation number
 
-    // Parse the json
-    var map = jsonDecode(resp.body);
-    Tiss data = Tiss.fromJson(map);
+      // Make the request
+      http.Response resp = await _makeMnrRequest(query);
+      if (resp.statusCode == 404) return [];
+      if (resp.statusCode != 200) return null;
 
-    // Add the data to the cache and return
-    _cache[query] = data;
-    return data;
+      // Parse the json
+      var map = jsonDecode(resp.body);
+      Person data = Person.fromJson(map);
+
+      // Add the data to the cache and return
+      _cache[query] = [data];
+      return [data];
+    } else {
+      // Load by name
+
+      // Make the request
+      http.Response resp = await _makePersonRequest(query);
+      if (resp.statusCode != 200) return null;
+
+      // Parse the json
+      var map = jsonDecode(resp.body);
+      Tiss data = Tiss.fromJson(map);
+
+      // Add the data to the cache and return
+      _cache[query] = data.results;
+      return data.results;
+    }
   }
 
   @override
   ThemeData appBarTheme(BuildContext context) {
-    return Theme.of(context);
+    final ThemeData theme = Theme.of(context);
+    if (theme.brightness == Brightness.dark) return theme;
+
+    return theme.copyWith(
+      primaryColor: theme.cardColor,
+      primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.grey),
+      primaryColorBrightness: MediaQuery.of(context).platformBrightness,
+      primaryTextTheme: theme.textTheme,
+    );
   }
 
   @override
@@ -104,14 +151,15 @@ class PersonSearch extends SearchDelegate<Null> {
 
   @override
   Widget buildResults(BuildContext context) {
-    Future<Tiss?> data = _getData(query);
+    Future<List<Person>?> data = _getData(query);
     _suggestionManager.addSuggestion(query);
 
     return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
-      return FutureBuilder<Tiss?>(
+      return FutureBuilder<List<Person>?>(
           future: data,
-          builder: (BuildContext context, AsyncSnapshot<Tiss?> snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Person>?> snapshot) {
             // Check for errors
             if (snapshot.hasError) {
               return SafeArea(
@@ -149,7 +197,7 @@ class PersonSearch extends SearchDelegate<Null> {
             }
 
             // Check if the server answered successfully
-            Tiss? data = snapshot.data;
+            List<Person>? data = snapshot.data;
             if (data == null) {
               return Center(
                   child:
@@ -157,7 +205,7 @@ class PersonSearch extends SearchDelegate<Null> {
             }
 
             // Show a error if there are no results
-            if (data.results.length == 0) {
+            if (data.length == 0) {
               return SafeArea(
                 child: Center(
                   child: Column(
@@ -184,7 +232,7 @@ class PersonSearch extends SearchDelegate<Null> {
             }
 
             // Filter the results
-            Iterable<Person> unfiltered = data.results;
+            Iterable<Person> unfiltered = data;
             if (_studentFilter) {
               unfiltered = unfiltered.where((Person p) => p.student != null);
             }

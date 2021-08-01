@@ -16,6 +16,7 @@ class App extends StatelessWidget {
       title: 'TU Addressbuch',
       locale: Locale('de', 'AT'),
       theme: ThemeData(
+        brightness: Brightness.light,
         accentColor: Colors.indigo[400],
         primarySwatch: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.blueGrey[50],
@@ -94,73 +95,69 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          //Padding(padding: EdgeInsets.only(top: 100)),
-          Expanded(child: Container()),
-          Center(
-            child: Text("Suche", style: Theme.of(context).textTheme.headline3),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: ElevatedButton(
-              /*
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100.0),
-              ),
-              color: Theme.of(context).cardColor,
-              */
-              onPressed: () {
-                showSearch(context: context, delegate: PersonSearch());
-              },
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      size: 24,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10),
-                    ),
-                    Text(
-                      "Studierende, Angestellte",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ],
-                ),
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
+        //Padding(padding: EdgeInsets.only(top: 100)),
+        Expanded(child: Container()),
+        Center(
+          child: Text("Suche", style: Theme.of(context).textTheme.headline3),
+        ),
+        Padding(
+          padding: EdgeInsets.all(16),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30.0),
+            )),
+            onPressed: () {
+              showSearch(context: context, delegate: PersonSearch());
+            },
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.search,
+                    size: 24,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                  ),
+                  Text(
+                    "Studierende, Angestellte",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
               ),
             ),
           ),
-          Expanded(
-            child: Container(),
-            flex: 2,
+        ),
+
+        Expanded(
+          child: Container(),
+          flex: 2,
+        ),
+        Padding(
+          padding: EdgeInsets.all(8),
+          child: RichText(
+            text: TextSpan(
+                style: DefaultTextStyle.of(context).style.copyWith(
+                    fontSize: Theme.of(context).textTheme.caption!.fontSize),
+                children: [
+                  TextSpan(
+                    text: "Made with ❤️ by ",
+                  ),
+                  TextSpan(
+                      text: "flofriday",
+                      //style: TextStyle(decoration: TextDecoration.underline),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          print("tap");
+                          launchInBrowser("https://github.com/flofriday");
+                        }),
+                ]),
           ),
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: RichText(
-              text: TextSpan(
-                  style: DefaultTextStyle.of(context).style.copyWith(
-                      fontSize: Theme.of(context).textTheme.caption!.fontSize),
-                  children: [
-                    TextSpan(
-                      text: "Made with ❤️ by ",
-                    ),
-                    TextSpan(
-                        text: "flofriday",
-                        //style: TextStyle(decoration: TextDecoration.underline),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            print("tap");
-                            launchInBrowser("https://github.com/flofriday");
-                          }),
-                  ]),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ]),
     );
   }
 }
