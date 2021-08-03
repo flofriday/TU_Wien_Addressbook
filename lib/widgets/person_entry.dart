@@ -16,10 +16,14 @@ class PersonEntry extends StatelessWidget {
       leading: Hero(tag: person.tissUri, child: PersonAvatar(person, 20)),
       title: Text(
         "${person.firstName} ${person.lastName}",
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
         person.getShortDescription(),
         maxLines: 1,
+        softWrap: false,
+        overflow: TextOverflow.fade,
       ),
     );
   }

@@ -56,6 +56,9 @@ dev_dependencies:
   json_serializable: ^4.1.4
   build_runner: ^2.0.6
 
+  # Native splashscreen to avoid white flash at startup
+  flutter_native_splash: ^1.2.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
