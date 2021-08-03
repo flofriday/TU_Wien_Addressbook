@@ -275,7 +275,7 @@ class PersonSearch extends SearchDelegate<Null> {
                           Padding(
                             padding: EdgeInsets.only(left: 8),
                             child: FilterChip(
-                              label: Text("stundent"),
+                              label: Text("student"),
                               selected: _studentFilter,
                               onSelected: (bool value) {
                                 setState(() {
