@@ -13,8 +13,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'TU Addressbuch',
-      locale: Locale('de', 'AT'),
+      title: 'TU Addressbook',
+      locale: Locale('en'),
       theme: ThemeData(
         brightness: Brightness.light,
         accentColor: Colors.indigo[400],
@@ -34,7 +34,7 @@ class App extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(10)))),
       ),
       debugShowCheckedModeBanner: false,
-      home: MainPage(title: 'TU Addressbuch'),
+      home: MainPage(title: 'TU Addressbook'),
     );
   }
 }
@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
         //Padding(padding: EdgeInsets.only(top: 100)),
         Expanded(child: Container()),
         Center(
-          child: Text("Suche", style: Theme.of(context).textTheme.headline3),
+          child: Text("Search", style: Theme.of(context).textTheme.headline3),
         ),
         Padding(
           padding: EdgeInsets.all(16),
@@ -123,7 +123,7 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.only(left: 10),
                   ),
                   Text(
-                    "Studierende, Angestellte",
+                    "Students, Employees",
                     style: TextStyle(fontSize: 20),
                   ),
                 ],
@@ -148,6 +148,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   TextSpan(
                       text: "flofriday",
+                      style: TextStyle(decoration: TextDecoration.underline),
                       //style: TextStyle(decoration: TextDecoration.underline),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {

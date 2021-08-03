@@ -25,7 +25,7 @@ class EmployeeCard extends StatelessWidget {
             ),
             if (employee.room != null)
               SimpleTile(
-                title: "Raum " + employee.room!.roomCode,
+                title: "Room " + employee.room!.roomCode,
                 subtitle: employee.room!.address.toString(),
               ),
             Builder(builder: (BuildContext context) {
@@ -35,7 +35,7 @@ class EmployeeCard extends StatelessWidget {
 
               List<Widget> widgets = [];
               for (int i = 0; i < numPhones; i++) {
-                String title = "Telefon";
+                String title = "Phone";
                 if (numPhones > 1) {
                   title += " ${i + 1}";
                 }
@@ -55,7 +55,7 @@ class EmployeeCard extends StatelessWidget {
 
               List<Widget> widgets = [];
               for (int i = 0; i < numWebsites; i++) {
-                String title = "Webseite";
+                String title = "Website";
                 if (numWebsites > 1) {
                   title += " ${i + 1}";
                 }
@@ -78,7 +78,7 @@ class EmployeeCard extends StatelessWidget {
                         children: [
                           Icon(Icons.phone),
                           Text(
-                            "Telefon",
+                            "Phone",
                             style: Theme.of(context).textTheme.caption,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -106,7 +106,7 @@ class EmployeeCard extends StatelessWidget {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       ListTile(
-                                        title: Text("Wähle eine Nummer",
+                                        title: Text("Select a number",
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline6),
@@ -138,7 +138,7 @@ class EmployeeCard extends StatelessWidget {
                         children: [
                           Icon(Icons.public),
                           Text(
-                            "Webseite",
+                            "Website",
                             style: Theme.of(context).textTheme.caption,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -166,7 +166,7 @@ class EmployeeCard extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     ListTile(
-                                      title: Text("Wähle eine Webseite",
+                                      title: Text("Select a website",
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline6),
@@ -199,7 +199,7 @@ class EmployeeCard extends StatelessWidget {
                         children: [
                           Icon(Icons.map),
                           Text(
-                            "Karte",
+                            "Map",
                             style: Theme.of(context).textTheme.caption,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,

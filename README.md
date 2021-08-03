@@ -21,7 +21,6 @@ API, the app itself is not official!
 
 Things I should implement, but propably won't.
 
-- Support english
 - Indicate if the user is logged in while searching
 - Indicate that there are no student information without logging in
 - Improve Settings UI
@@ -39,10 +38,11 @@ Things I should implement, but propably won't.
 
 ## Frequently asked Question
 
-### Why is the App in German?
+### Why is the App sometimes German?
 
-Many of the TISS API responses are in German, so in the spirit of consistency
-I just designed the whole App in German.
+While there is undocumented flag `locale` which you can set to english to get
+english results from the API, it can still happen that TISS returns german
+results.
 
 ### The search results are bad!
 

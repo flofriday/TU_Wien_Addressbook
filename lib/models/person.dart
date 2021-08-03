@@ -74,12 +74,12 @@ class Person {
   }
 
   String getGender() {
-    if (this.gender == null) return "unbekannt";
+    if (this.gender == null) return "unknown";
 
     if (this.gender == 'M')
-      return "männlich";
+      return "male";
     else if (this.gender == 'W')
-      return "weiblich";
+      return "female";
     else
       return this.gender!;
   }
@@ -108,16 +108,14 @@ class Person {
     String description = "";
 
     if (this.employee != null && this.student != null) {
-      description = this.gender == "W"
-          ? "Studentin und Mitarbeiterin"
-          : "Student und Mitarbeiter";
+      description = "Student and Employee";
     } else if (this.employee != null) {
-      description = this.gender == "W" ? "Mitarbeiterin" : "Mitarbeiter";
+      description = "Employee";
     } else if (this.student != null) {
-      description = this.gender == "W" ? "Studentin" : "Student";
-      description += ", seit ${this.student!.getMatriculationYear()}";
+      description = "Student";
+      description += ", since ${this.student!.getMatriculationYear()}";
     } else {
-      description = "keine Information";
+      description = "No information";
     }
 
     if (this.employee != null) {
@@ -162,6 +160,10 @@ class Employee {
   @JsonKey(name: 'org_ref')
   Organisation orgRef = Organisation();
 
+  // TODO: The problem here is that the function often is not english, but the
+  // category often is. So my current trade-off is to use the category for
+  // now and hope it is not to generic.
+  @JsonKey(name: 'function_category')
   String function = "";
 
   Room? room;
@@ -184,7 +186,7 @@ class Organisation {
   @JsonKey(name: 'tiss_id')
   int tissId = 0;
 
-  @JsonKey(name: 'name_de')
+  @JsonKey(name: 'name_en')
   String name = "";
 
   Organisation();

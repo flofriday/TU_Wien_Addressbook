@@ -13,9 +13,9 @@ class ThridPartyCard extends StatelessWidget {
           ListTile(
             isThreeLine: true,
             leading: Icon(Icons.description),
-            title: Text("Lizenzen Dritter"),
-            subtitle: Text(
-                "Diese Bibliotheken haben mir geholfen die App zu entwickeln."),
+            title: Text("Third party licenses"),
+            subtitle: Text("Theses libraries helped me to develop this app. "
+                "(Most are from the flutter frameword"),
           ),
           ButtonBar(
             children: [
@@ -33,7 +33,7 @@ class ThridPartyCard extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text("Lizenzen"),
+                child: Text("Licenses"),
               ),
             ],
           ),

@@ -40,7 +40,7 @@ class LoginCard extends StatelessWidget {
                   TextField(
                     decoration: const InputDecoration(
                       icon: Icon(Icons.lock),
-                      labelText: 'Passwort',
+                      labelText: 'Password',
                     ),
                     obscureText: true,
                     controller: TextEditingController()
@@ -53,13 +53,11 @@ class LoginCard extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
-                    child:
-                        Text("Informationen über Studierende werden von TISS "
-                            "geschützt und können deswegen nur von "
-                            "eingeloggten Usern gesehen werden.\n\n"
-                            "Deine Logindaten werden nur lokal auf "
-                            "diesem Gerät gespeichert und an nur TISS "
-                            "zur Authentifizierung gesendet."),
+                    child: Text("TISS protects students privacy, therefore you "
+                        "need to be logged in to find them.\n\n"
+                        "Your credentials are only saved locally on this "
+                        "device and are only send to TISS to authenticate "
+                        "you"),
                   ),
                 ]);
               }),

@@ -18,19 +18,19 @@ class OpenSourceCard extends StatelessWidget {
             child: RichText(
               textAlign: TextAlign.start,
               text: TextSpan(
-                text: 'Diese App ist freie Software unter der MIT Lizenz. '
-                    'Somit hat jede Person die Freiheit den Quellcode zu '
-                    'untersuchen, Änderungen an diesem vorzunehemen und die '
-                    'App mit oder ohne Änderungen zu redistributieren.\n\n',
+                text: 'This app is free software under the MIT license'
+                    'This app is free software under the MIT license. '
+                    'Therefore everyone can view, edit, and redistribute the '
+                    'sourcecode with or without changes.\n\n',
                 style: DefaultTextStyle.of(context).style,
                 children: <TextSpan>[
                   TextSpan(
-                      text: 'Warnung: ',
+                      text: 'Disclaimer: ',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   TextSpan(
-                      text: 'Obwohl die Daten von einer offiziellen TU Wien '
-                          'API kommen, ist diese App kein offizielles '
-                          'Angebot der TU Wien!'),
+                      text: ' While the data this app displays, comes from an '
+                          'official TU Wien API, the app itself is not '
+                          'official!'),
                 ],
               ),
             ),

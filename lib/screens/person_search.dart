@@ -24,7 +24,7 @@ class PersonSearch extends SearchDelegate<Null> {
 
   PersonSearch()
       : super(
-          searchFieldLabel: "Suche",
+          searchFieldLabel: "Search",
           keyboardType: TextInputType.text,
           textInputAction: TextInputAction.search,
         );
@@ -47,7 +47,7 @@ class PersonSearch extends SearchDelegate<Null> {
       "max_treffer": "100",
       "preview_picture_uri": "true",
       "intern": "true",
-      "locale": "de",
+      "locale": "en",
     });
     http.Response res = await http.get(apiSearchUri, headers: headers);
     return res;
@@ -64,7 +64,7 @@ class PersonSearch extends SearchDelegate<Null> {
         Uri.https("tiss.tuwien.ac.at", "/api/person/v22/mnr/$query", {
       "preview_picture_uri": "true",
       "intern": "true",
-      "locale": "de",
+      "locale": "en",
     });
     http.Response res = await http.get(apiSearchUri, headers: headers);
     return res;
@@ -179,7 +179,7 @@ class PersonSearch extends SearchDelegate<Null> {
                                   ),
                         ),
                         Text(
-                          "Ein Fehler ist aufgetreten beim Laden der Daten.",
+                          "An error occoured during loading.",
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ]),
@@ -199,9 +199,7 @@ class PersonSearch extends SearchDelegate<Null> {
             // Check if the server answered successfully
             List<Person>? data = snapshot.data;
             if (data == null) {
-              return Center(
-                  child:
-                      Text("Ein Fehler ist aufgetreten beim Laden der Daten."));
+              return Center(child: Text("An error occoured during loading."));
             }
 
             // Show a error if there are no results
@@ -223,7 +221,7 @@ class PersonSearch extends SearchDelegate<Null> {
                                   ),
                         ),
                         Text(
-                          "Niemanden gefunden.",
+                          "Noone found.",
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ]),
@@ -277,7 +275,7 @@ class PersonSearch extends SearchDelegate<Null> {
                           Padding(
                             padding: EdgeInsets.only(left: 8),
                             child: FilterChip(
-                              label: Text("Studierende"),
+                              label: Text("stundent"),
                               selected: _studentFilter,
                               onSelected: (bool value) {
                                 setState(() {
@@ -289,7 +287,7 @@ class PersonSearch extends SearchDelegate<Null> {
                           Padding(
                             padding: EdgeInsets.only(left: 8),
                             child: FilterChip(
-                              label: Text("Angestellte"),
+                              label: Text("employee"),
                               selected: _employeeFilter,
                               onSelected: (bool value) {
                                 setState(() {
@@ -301,7 +299,7 @@ class PersonSearch extends SearchDelegate<Null> {
                           Padding(
                             padding: EdgeInsets.only(left: 8),
                             child: FilterChip(
-                              label: Text("weiblich"),
+                              label: Text("female"),
                               selected: _femaleFilter,
                               onSelected: (bool value) {
                                 setState(() {
@@ -317,7 +315,7 @@ class PersonSearch extends SearchDelegate<Null> {
                           Padding(
                             padding: EdgeInsets.only(left: 8),
                             child: FilterChip(
-                              label: Text("männlich"),
+                              label: Text("male"),
                               selected: _maleFilter,
                               onSelected: (bool value) {
                                 setState(() {

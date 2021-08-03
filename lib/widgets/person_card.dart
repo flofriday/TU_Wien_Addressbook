@@ -26,17 +26,17 @@ class PersonInfoCard extends StatelessWidget {
               children: <Widget>[
                 Padding(padding: EdgeInsets.only(top: 100)),
                 SimpleTile(title: "Name", subtitle: person.getNameWithTitles()),
-                SimpleTile(title: "Geschlecht", subtitle: person.getGender()),
+                SimpleTile(title: "Gender", subtitle: person.getGender()),
                 if (person.email != null)
                   SimpleTile(title: "Email", subtitle: person.email!),
                 if (person.otherEmails != null &&
                     person.otherEmails!.isNotEmpty)
                   ...person.otherEmails!.map((email) => SimpleTile(
-                        title: "Weitere Email",
+                        title: "Other Email",
                         subtitle: email,
                       )),
                 if (person.phoneNumber != null)
-                  SimpleTile(title: "Telefon", subtitle: person.phoneNumber!),
+                  SimpleTile(title: "Phone", subtitle: person.phoneNumber!),
                 if (person.phoneNumber != null || person.email != null)
                   Padding(
                     padding: EdgeInsets.all(8),
@@ -48,7 +48,7 @@ class PersonInfoCard extends StatelessWidget {
                               children: [
                                 Icon(Icons.phone),
                                 Text(
-                                  "Telefon",
+                                  "Phone",
                                   style: Theme.of(context).textTheme.caption,
                                 ),
                               ],
@@ -93,14 +93,14 @@ class PersonInfoCard extends StatelessWidget {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           ListTile(
-                                            title: Text("Wähle eine Email",
+                                            title: Text("Select an Email",
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headline6),
                                           ),
                                           ListTile(
                                             title: Text(person.email!),
-                                            subtitle: Text("Haupt Email"),
+                                            subtitle: Text("Main Email"),
                                             onTap: () {
                                               Navigator.pop(
                                                   context, person.email);
@@ -109,7 +109,7 @@ class PersonInfoCard extends StatelessWidget {
                                           ...person.otherEmails!.map(
                                             (email) => ListTile(
                                               title: Text(email),
-                                              subtitle: Text("Weitere Email"),
+                                              subtitle: Text("Other Email"),
                                               onTap: () {
                                                 Navigator.pop(context, email);
                                               },
