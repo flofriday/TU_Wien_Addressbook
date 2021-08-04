@@ -257,99 +257,101 @@ class PersonSearch extends SearchDelegate<Null> {
             // Build the ui
             var result = Container(
               color: Theme.of(context).cardColor,
-              child: ListView.separated(
-                controller: controller,
-                itemCount: results.length + 1,
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    height: 0,
-                    indent: index == 0 ? 0 : (16 + 40 + 16).toDouble(),
-                  );
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
-                    return SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: FilterChip(
-                              label: Text("student"),
-                              selected: _studentFilter,
-                              onSelected: (bool value) {
-                                setState(() {
-                                  _studentFilter = value;
-                                });
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: FilterChip(
-                              label: Text("employee"),
-                              selected: _employeeFilter,
-                              onSelected: (bool value) {
-                                setState(() {
-                                  _employeeFilter = value;
-                                });
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: FilterChip(
-                              label: Text("female"),
-                              selected: _femaleFilter,
-                              onSelected: (bool value) {
-                                setState(() {
-                                  _femaleFilter = value;
-
-                                  if (_maleFilter && value) {
-                                    _maleFilter = false;
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: FilterChip(
-                              label: Text("male"),
-                              selected: _maleFilter,
-                              onSelected: (bool value) {
-                                setState(() {
-                                  _maleFilter = value;
-
-                                  if (_femaleFilter && value) {
-                                    _femaleFilter = false;
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8),
-                          )
-                        ],
-                      ),
+              child: Scrollbar(
+                child: ListView.separated(
+                  controller: controller,
+                  itemCount: results.length + 1,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider(
+                      height: 0,
+                      indent: index == 0 ? 0 : (16 + 40 + 16).toDouble(),
                     );
-                  }
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0) {
+                      return SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: 8),
+                              child: FilterChip(
+                                label: Text("student"),
+                                selected: _studentFilter,
+                                onSelected: (bool value) {
+                                  setState(() {
+                                    _studentFilter = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 8),
+                              child: FilterChip(
+                                label: Text("employee"),
+                                selected: _employeeFilter,
+                                onSelected: (bool value) {
+                                  setState(() {
+                                    _employeeFilter = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 8),
+                              child: FilterChip(
+                                label: Text("female"),
+                                selected: _femaleFilter,
+                                onSelected: (bool value) {
+                                  setState(() {
+                                    _femaleFilter = value;
 
-                  return PersonEntry(
-                    results[index - 1],
-                    onTap: () {
-                      //Navigator.push(
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              PersonScreen(results[index - 1]),
+                                    if (_maleFilter && value) {
+                                      _maleFilter = false;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 8),
+                              child: FilterChip(
+                                label: Text("male"),
+                                selected: _maleFilter,
+                                onSelected: (bool value) {
+                                  setState(() {
+                                    _maleFilter = value;
+
+                                    if (_femaleFilter && value) {
+                                      _femaleFilter = false;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 8),
+                            )
+                          ],
                         ),
                       );
-                    },
-                  );
-                },
+                    }
+
+                    return PersonEntry(
+                      results[index - 1],
+                      onTap: () {
+                        //Navigator.push(
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PersonScreen(results[index - 1]),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             );
             //_controller.jumpTo(10);
