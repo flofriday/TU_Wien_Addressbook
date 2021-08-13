@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
 import 'package:tu_wien_addressbook/widgets/employee_card.dart';
 import 'package:tu_wien_addressbook/widgets/student_card.dart';

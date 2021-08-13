@@ -2,10 +2,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SuggestionManager {
   Future<SharedPreferences> futurePrefs = SharedPreferences.getInstance();
+  final String suggestionsKey = 'suggestions';
 
   Future<List<String>> getSuggestions() async {
     SharedPreferences prefs = await futurePrefs;
-    return prefs.getStringList('suggestions') ?? [];
+    return prefs.getStringList(suggestionsKey) ?? [];
   }
 
   Future<List<String>> getSuggestionsFor(String query) async {
@@ -29,7 +30,7 @@ class SuggestionManager {
   Future<void> addSuggestion(String value) async {
     // Load the current suggestions
     SharedPreferences prefs = await futurePrefs;
-    List<String> current = prefs.getStringList('suggestions') ?? [];
+    List<String> current = prefs.getStringList(suggestionsKey) ?? [];
     if (current.length > 99) current.removeRange(99, current.length);
 
     // Don't add the new suggestion if it is empty or the same as the last
@@ -51,6 +52,14 @@ class SuggestionManager {
     // Add the new value
     List<String> newSuggestions = [value];
     newSuggestions.addAll(current);
-    await prefs.setStringList('suggestions', newSuggestions);
+    await prefs.setStringList(suggestionsKey, newSuggestions);
+  }
+
+  /// Delete all suggestions
+  /// Really makes you think what the user searched for on a contacts app that
+  /// the **need** to delete the history. 😉
+  Future<void> clear() async {
+    SharedPreferences prefs = await futurePrefs;
+    prefs.remove(suggestionsKey);
   }
 }

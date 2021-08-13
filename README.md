@@ -24,6 +24,7 @@ Things I should implement, but propably won't.
 - Indicate if the user is logged in while searching
 - Indicate that there are no student information without logging in
 - Improve Settings UI
+- Automatically check with GitHub if there is a newer version
 
 ## Build it yourself
 

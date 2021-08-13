@@ -16,26 +16,66 @@ class _MyRequest extends http.Request {
 
 /// A class to load the necessary TISS cookies
 ///
-/// Note: Instances of this class should be short lived (no longer than 10min),
-/// because objects only go through the login process once they are constructed
-/// and than save the result for performance reasons.
-///
 /// This class makes heavy use of shared preferences, and can only log in if
 /// there is a 'username' and 'password' field in the shared prefrences with
 /// valid credentials. Furthermore, this class also saves the cookie in the
 /// shared preferences with the key 'tisscookie' and a timestamp
 /// (in milliseconds since epoche) with the key 'tisscookietime'.
 class TissLoginManager {
+  static final TissLoginManager _instance = TissLoginManager._internal();
+
   Future<SharedPreferences> futurePrefs = SharedPreferences.getInstance();
   Future<String>? tissCookies;
+  Future<bool>? loggedIn;
 
-  TissLoginManager() {
+  factory TissLoginManager() {
+    return _instance;
+  }
+
+  TissLoginManager._internal() {
     print("Loading cookies...");
     this.tissCookies = _loadCookies();
   }
 
+  // Get the cookies for the logged in user, if the user is not logged in,
+  // the string in the future will be empty.
   Future<String>? getCookies() {
     return tissCookies;
+  }
+
+  // This updates the credentials, and notifies the caller with the bool in the
+  // future if the credentials worked.
+  Future<bool> updateCredentials(String username, String password) async {
+    SharedPreferences prefs = await futurePrefs;
+    await prefs.setString('username', username);
+    await prefs.setString('password', password);
+    await prefs.remove('tisscookie');
+    await prefs.remove('tisscookietime');
+
+    this.tissCookies = _loadCookies();
+    String cookie = await this.tissCookies!;
+    if (cookie != "") return true;
+
+    // So the entered credentials are not correct so delete them
+    await prefs.remove('username');
+    await prefs.remove('password');
+    return false;
+  }
+
+  Future<void> logout() async {
+    SharedPreferences prefs = await futurePrefs;
+    await prefs.remove('tisscookie');
+    await prefs.remove('tisscookietime');
+    await prefs.remove('username');
+    await prefs.remove('password');
+
+    this.tissCookies = _loadCookies();
+    await this.tissCookies;
+  }
+
+  Future<bool> isLoggedIn() async {
+    String cookie = await this.tissCookies!;
+    return cookie != "";
   }
 
   Future<String> _loadCookies() async {
