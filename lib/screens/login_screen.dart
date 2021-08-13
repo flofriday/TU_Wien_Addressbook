@@ -17,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _passwordController = TextEditingController();
   bool _loading = false;
 
+  // TODO: On Android (release build) the app is stuck here and never leaves
   void _login() async {
     setState(() {
       _loading = true;
