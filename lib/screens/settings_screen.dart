@@ -179,7 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             actions: <Widget>[
                               TextButton(
-                                child: const Text('I will be quiet.'),
+                                child: const Text('I will be quiet'),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
