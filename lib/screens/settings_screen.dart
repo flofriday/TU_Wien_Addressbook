@@ -144,24 +144,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(12),
-            child: Center(
-              child: FutureBuilder(
-                  future: PackageInfo.fromPlatform(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<PackageInfo> snapshot) {
-                    if (!snapshot.hasData) return Text("zz");
+          Center(
+            child: FutureBuilder(
+                future: PackageInfo.fromPlatform(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<PackageInfo> snapshot) {
+                  if (!snapshot.hasData) return Text("zz");
 
-                    String build = "debug";
-                    if (kReleaseMode) build = "release";
+                  String build = "debug";
+                  if (kReleaseMode) build = "release";
 
-                    return Text(
+                  return TextButton(
+                    child: Text(
                       "Version ${snapshot.data!.version} $build build",
                       style: Theme.of(context).textTheme.caption,
-                    );
-                  }),
-            ),
+                    ),
+                    onPressed: () {
+                      // This is just for the animation to hint that there
+                      // is something
+                    },
+                    onLongPress: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text('🐮 Mooooooo!'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: const <Widget>[
+                                  Text(
+                                      'Oh no!\nYou found on of my eastereggs, how emberassing. 🙈\n\nOk you can keep it, but please don\'t tell the other about this.'),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Text('I will be quiet.'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  );
+                }),
           ),
         ],
       ),
