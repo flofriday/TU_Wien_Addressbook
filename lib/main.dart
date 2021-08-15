@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tu_wien_addressbook/models/tiss_login_manager.dart';
+import 'package:tu_wien_addressbook/models/update_manager.dart';
 import 'package:tu_wien_addressbook/screens/login_screen.dart';
 import 'package:tu_wien_addressbook/screens/person_search.dart';
 import 'package:tu_wien_addressbook/screens/settings_screen.dart';
@@ -60,7 +61,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   Future<bool> _isLoggedIn = TissLoginManager().isLoggedIn();
-
+  Future<bool> _hasNewerVersion = UpdateManager().hasNewerVersion();
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -90,98 +91,133 @@ class _MainPageState extends State<MainPage> {
           )
         ],
       ),
-      body: SafeArea(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          //Padding(padding: EdgeInsets.only(top: 100)),
-          Expanded(child: Container()),
-          Center(
-            child: Text("Search", style: Theme.of(context).textTheme.headline3),
-          ),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0),
-              )),
-              onPressed: () {
-                showSearch(context: context, delegate: PersonSearch());
-              },
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      size: 24,
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Expanded(child: Container()),
+              Center(
+                child: Text("Search",
+                    style: Theme.of(context).textTheme.headline3),
+              ),
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0),
+                  )),
+                  onPressed: () {
+                    showSearch(context: context, delegate: PersonSearch());
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.search,
+                          size: 24,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                        ),
+                        Text(
+                          "Students, Employees",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 10),
-                    ),
-                    Text(
-                      "Students, Employees",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              FutureBuilder(
+                future: _isLoggedIn,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData || snapshot.data == true)
+                    return Text("");
+
+                  return RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: 'Login',
+                          style:
+                              TextStyle(decoration: TextDecoration.underline),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () async {
+                              print('WTF');
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginScreen(),
+                                ),
+                              );
+                              print('NOW');
+                              setState(() {
+                                this._isLoggedIn =
+                                    TissLoginManager().isLoggedIn();
+                              });
+                            }),
+                      TextSpan(text: ' to find students.')
+                    ]),
+                  );
+                },
+              ),
+              Expanded(
+                child: Container(),
+                flex: 2,
+              ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: RichText(
+                  text: TextSpan(
+                      style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.caption!.fontSize),
+                      children: [
+                        TextSpan(
+                          text: "Made with ❤️ by ",
+                        ),
+                        TextSpan(
+                            text: "flofriday",
+                            style:
+                                TextStyle(decoration: TextDecoration.underline),
+                            //style: TextStyle(decoration: TextDecoration.underline),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                launchInBrowser("https://github.com/flofriday");
+                              }),
+                      ]),
+                ),
+              ),
+            ]),
           ),
           FutureBuilder(
-            future: _isLoggedIn,
+            future: _hasNewerVersion,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (!snapshot.hasData || snapshot.data == true) return Text("");
+              if (!snapshot.hasData || snapshot.data == false)
+                return Container();
 
-              return RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: 'Login',
-                      style: TextStyle(decoration: TextDecoration.underline),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () async {
-                          print('WTF');
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginScreen(),
-                            ),
-                          );
-                          print('NOW');
-                          setState(() {
-                            this._isLoggedIn = TissLoginManager().isLoggedIn();
-                          });
-                        }),
-                  TextSpan(text: ' to find students.')
-                ]),
+              return Column(
+                children: [
+                  MaterialBanner(
+                    leading: Icon(Icons.celebration),
+                    content: Text(
+                        "A new version is available!\nUpdate and get all the new features."),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          launchInBrowser(
+                              "https://github.com/flofriday/TU_Wien_Addressbook/releases/latest");
+                        },
+                        child: Text("UPDATE"),
+                      ),
+                    ],
+                  )
+                ],
               );
             },
           ),
-          Expanded(
-            child: Container(),
-            flex: 2,
-          ),
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: RichText(
-              text: TextSpan(
-                  style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.caption!.fontSize),
-                  children: [
-                    TextSpan(
-                      text: "Made with ❤️ by ",
-                    ),
-                    TextSpan(
-                        text: "flofriday",
-                        style: TextStyle(decoration: TextDecoration.underline),
-                        //style: TextStyle(decoration: TextDecoration.underline),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            launchInBrowser("https://github.com/flofriday");
-                          }),
-                  ]),
-            ),
-          ),
-        ]),
+        ],
       ),
     );
   }

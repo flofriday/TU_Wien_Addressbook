@@ -20,8 +20,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("build");
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Settings"),

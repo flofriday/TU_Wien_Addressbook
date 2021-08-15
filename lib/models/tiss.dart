@@ -3,6 +3,8 @@ import 'package:tu_wien_addressbook/models/person.dart';
 
 part 'tiss.g.dart';
 
+// To build the code generateion run:
+// flutter pub run build_runner build
 @JsonSerializable()
 class Tiss {
   String query;

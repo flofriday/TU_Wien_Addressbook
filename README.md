@@ -15,13 +15,14 @@ API, the app itself is not official!
 - Search by matriculation number, or name
 - Filter search results
 - Optional login (needed to get student information)
-- Dark Mode
+- Dark and Light Mode
 
 ## Future Features
 
-Things I should implement, but propably won't.
+So, I currently implemented all features I can think of. However, I will still
+maintain the app and update it to be compatible with future OS versions.
 
-- Automatically check with GitHub if there is a newer version
+If you have ideas for new features or bug reports, feel free to open an issue.
 
 ## Build it yourself
 
