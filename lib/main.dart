@@ -19,9 +19,9 @@ class App extends StatelessWidget {
       locale: Locale('en'),
       theme: ThemeData(
         brightness: Brightness.light,
-        accentColor: Colors.indigo[400],
-        primarySwatch: Colors.blueGrey,
-        scaffoldBackgroundColor: Colors.blueGrey[50],
+        accentColor: Colors.indigo,
+        primarySwatch: Colors.indigo,
+        scaffoldBackgroundColor: Colors.indigo[50],
         cardTheme: CardTheme(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10)))),
@@ -104,9 +104,10 @@ class _MainPageState extends State<MainPage> {
                 padding: EdgeInsets.all(16),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0),
-                  )),
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
+                  ),
                   onPressed: () {
                     showSearch(context: context, delegate: PersonSearch());
                   },
@@ -137,28 +138,28 @@ class _MainPageState extends State<MainPage> {
                     return Text("");
 
                   return RichText(
-                    text: TextSpan(children: [
-                      TextSpan(
-                          text: 'Login',
-                          style:
-                              TextStyle(decoration: TextDecoration.underline),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () async {
-                              print('WTF');
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginScreen(),
-                                ),
-                              );
-                              print('NOW');
-                              setState(() {
-                                this._isLoggedIn =
-                                    TissLoginManager().isLoggedIn();
-                              });
-                            }),
-                      TextSpan(text: ' to find students.')
-                    ]),
+                    text: TextSpan(
+                        style: Theme.of(context).textTheme.bodyText1,
+                        children: [
+                          TextSpan(
+                              text: 'Login',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginScreen(),
+                                    ),
+                                  );
+                                  setState(() {
+                                    this._isLoggedIn =
+                                        TissLoginManager().isLoggedIn();
+                                  });
+                                }),
+                          TextSpan(text: ' to find students.')
+                        ]),
                   );
                 },
               ),
@@ -170,9 +171,7 @@ class _MainPageState extends State<MainPage> {
                 padding: EdgeInsets.all(8),
                 child: RichText(
                   text: TextSpan(
-                      style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.caption!.fontSize),
+                      style: Theme.of(context).textTheme.bodyText2,
                       children: [
                         TextSpan(
                           text: "Made with ❤️ by ",

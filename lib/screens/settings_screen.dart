@@ -173,7 +173,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               child: ListBody(
                                 children: const <Widget>[
                                   Text(
-                                      'Oh no!\nYou found on of my eastereggs, how emberassing. 🙈\n\nOk you can keep it, but please don\'t tell the other about this.'),
+                                      'Oh no!\nYou found on of my eastereggs, how emberassing. 🙈\n\nOk you can keep it, but please don\'t tell the others about this.'),
                                 ],
                               ),
                             ),

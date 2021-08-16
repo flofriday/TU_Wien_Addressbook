@@ -19,10 +19,7 @@ API, the app itself is not official!
 
 ## Future Features
 
-So, I currently implemented all features I can think of. However, I will still
-maintain the app and update it to be compatible with future OS versions.
-
-If you have ideas for new features or bug reports, feel free to open an issue.
+- Fix light theme
 
 ## Build it yourself
 
