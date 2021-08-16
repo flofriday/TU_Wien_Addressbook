@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tu_wien_addressbook/models/github_tag.dart';
 import 'package:tu_wien_addressbook/models/semver.dart';
 import 'package:http/http.dart' as http;

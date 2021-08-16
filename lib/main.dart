@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tu_wien_addressbook/models/tiss_login_manager.dart';
 import 'package:tu_wien_addressbook/models/update_manager.dart';
 import 'package:tu_wien_addressbook/screens/login_screen.dart';

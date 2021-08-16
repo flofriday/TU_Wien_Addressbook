@@ -94,7 +94,7 @@ class EmployeeCard extends StatelessWidget {
 
                         // Open a bottom modal sheet and ask the user which website
                         // they wanna see
-                        String choice = await showModalBottomSheet(
+                        String? choice = await showModalBottomSheet(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(10)),
@@ -154,7 +154,7 @@ class EmployeeCard extends StatelessWidget {
 
                         // Open a bottom modal sheet and ask the user which website
                         // they wanna see
-                        String choice = await showModalBottomSheet(
+                        String? choice = await showModalBottomSheet(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(10)),

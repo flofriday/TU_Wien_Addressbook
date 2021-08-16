@@ -84,7 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all(Colors.red)),
-                                child: const Text('Delete'),
+                                child: const Text('DELETE'),
                                 onPressed: () async {
                                   await SuggestionManager().clear();
                                   Navigator.of(context).pop();

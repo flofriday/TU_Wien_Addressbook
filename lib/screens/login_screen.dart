@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tu_wien_addressbook/models/tiss_login_manager.dart';
-import 'package:tu_wien_addressbook/widgets/utils.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,7 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _passwordController = TextEditingController();
   bool _loading = false;
 
-  // TODO: On Android (release build) the app is stuck here and never leaves
   void _login() async {
     setState(() {
       _loading = true;
@@ -51,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             actions: <Widget>[
               TextButton(
-                child: const Text('Close'),
+                child: const Text('CLOSE'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -104,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (!_loading)
                   ElevatedButton(
                     onPressed: () => _login(),
-                    child: Text("Login"),
+                    child: Text("LOGIN"),
                   ),
                 if (_loading)
                   Padding(
@@ -113,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (_loading)
                   ElevatedButton(
                     onPressed: null,
-                    child: Text("Login"),
+                    child: Text("LOGIN"),
                   )
               ],
             ),
@@ -191,7 +188,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text("TISS protects students privacy, therefore you "
-                        "need to be logged in to find them.\n\n"
+                        "need to be logged in to find them.\n"
+                        "Without logging in you can still search for faculty "
+                        "staff.\n\n"
                         "Your credentials are only saved locally on this "
                         "device and are only ever used to authenticate "
                         "you with TISS."),

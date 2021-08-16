@@ -216,9 +216,9 @@ class TissLoginManager {
       if (!resp.isRedirect) {
         break;
       } else {
+        if (resp.headers['location'] == null) break;
         sessionUrl = resp.headers['location']!;
         print("Redirect to: ${resp.headers['location']}");
-        if (sessionUrl == null) break;
       }
     }
 
