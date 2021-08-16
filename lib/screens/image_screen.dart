@@ -11,7 +11,6 @@ class ImageScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        brightness: Brightness.dark,
         foregroundColor: Colors.black,
         backgroundColor: Color.fromARGB(0xAA, 0x00, 0x00, 0x00),
         elevation: 0,

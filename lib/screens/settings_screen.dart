@@ -178,11 +178,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                             actions: <Widget>[
-                              TextButton(
-                                child: const Text('I will be quiet'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
+                              Center(
+                                child: OutlinedButton(
+                                  child: const Text('I will be quiet'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
                               ),
                             ],
                           );

@@ -119,11 +119,13 @@ class PersonSearch extends SearchDelegate<Null> {
     if (theme.brightness == Brightness.dark) return theme;
 
     return theme.copyWith(
-      primaryColor: theme.cardColor,
-      primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.grey),
-      primaryColorBrightness: MediaQuery.of(context).platformBrightness,
-      primaryTextTheme: theme.textTheme,
-    );
+        primaryColor: theme.cardColor,
+        primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.grey),
+        primaryColorBrightness: MediaQuery.of(context).platformBrightness,
+        primaryTextTheme: theme.textTheme,
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.light,
+        ));
   }
 
   @override

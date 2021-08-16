@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: Text("TISS Login"),
       ),
       body: Padding(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(10),
         child: ListView(
           children: [
             FutureBuilder(

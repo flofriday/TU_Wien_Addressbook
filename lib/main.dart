@@ -18,12 +18,14 @@ class App extends StatelessWidget {
       locale: Locale('en'),
       theme: ThemeData(
         brightness: Brightness.light,
+        appBarTheme: AppBarTheme(brightness: Brightness.dark),
         accentColor: Colors.indigo,
         primarySwatch: Colors.indigo,
         scaffoldBackgroundColor: Colors.indigo[50],
         cardTheme: CardTheme(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)))),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+        ),
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -31,8 +33,9 @@ class App extends StatelessWidget {
         primarySwatch: Colors.blue,
         //scaffoldBackgroundColor: Colors.blueGrey[50],
         cardTheme: CardTheme(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)))),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10))),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: MainPage(title: 'TU Addressbook'),
