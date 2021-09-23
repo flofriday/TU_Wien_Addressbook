@@ -243,9 +243,10 @@ class PersonSearch extends SearchDelegate<Null> {
             });
 
             // Build the ui
-            var result = Container(
+            var result = Material(
               color: Theme.of(context).cardColor,
               child: Scrollbar(
+                controller: controller,
                 child: ListView.separated(
                   controller: controller,
                   itemCount: results.length + 1,
@@ -353,7 +354,7 @@ class PersonSearch extends SearchDelegate<Null> {
     Future<List<String>> futureSuggestions =
         _suggestionManager.getSuggestionsFor(query);
 
-    return Container(
+    return Material(
       color: Theme.of(context).cardColor,
       child: FutureBuilder(
           future: futureSuggestions,

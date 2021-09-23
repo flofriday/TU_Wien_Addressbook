@@ -26,7 +26,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
-          Container(
+          Material(
             color: Theme.of(context).cardColor,
             child: Column(
               mainAxisSize: MainAxisSize.min,
