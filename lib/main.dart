@@ -198,7 +198,7 @@ class _MainPageState extends State<MainPage> {
             future: _hasNewerVersion,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData || snapshot.data == false) {
-                //return Container();
+                return Container();
               }
 
               return Column(
