@@ -37,6 +37,10 @@ class PersonInfoCard extends StatelessWidget {
                       )),
                 if (person.phoneNumber != null)
                   SimpleTile(title: "Phone", subtitle: person.phoneNumber!),
+                if (person.easterEggHeader() != null)
+                  SimpleTile(
+                      title: person.easterEggHeader()!,
+                      subtitle: person.easterEggBody()!),
                 if (person.phoneNumber != null || person.email != null)
                   Padding(
                     padding: EdgeInsets.all(8),

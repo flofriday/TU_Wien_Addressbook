@@ -1,5 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:tu_wien_addressbook/models/easteregg_data.dart';
 import 'package:uri/uri.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 part 'person.g.dart';
 
@@ -48,6 +51,8 @@ class Person {
 
   List<Employee>? employee;
   Student? student;
+
+  EastereggData _eastereggData = EastereggData();
 
   Person();
 
@@ -132,6 +137,21 @@ class Person {
     if (this.phoneNumber != null) s += "\n\n$phoneNumber";
     s += "\n\n${getTissUrl()}";
     return s;
+  }
+
+  String _getCustomHash() {
+    String content = this.firstName + this.lastName + this.email!;
+    var bytes = utf8.encode(content);
+    var digest = sha256.convert(bytes);
+    return digest.toString();
+  }
+
+  String? easterEggHeader() {
+    return this._eastereggData.getHeader(_getCustomHash());
+  }
+
+  String? easterEggBody() {
+    return this._eastereggData.getBody(_getCustomHash());
   }
 }
 

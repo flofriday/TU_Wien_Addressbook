@@ -197,15 +197,15 @@ class _MainPageState extends State<MainPage> {
           FutureBuilder(
             future: _hasNewerVersion,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (!snapshot.hasData || snapshot.data == false)
-                return Container();
+              if (!snapshot.hasData || snapshot.data == false) {
+                //return Container();
+              }
 
               return Column(
                 children: [
                   MaterialBanner(
                     leading: Icon(Icons.celebration),
-                    content: Text(
-                        "A new version is available!\nUpdate and get all the new features."),
+                    content: Text("A new version is available!"),
                     actions: [
                       TextButton(
                         onPressed: () {
