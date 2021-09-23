@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tu_wien_addressbook/models/tiss_login_manager.dart';
 import 'package:tu_wien_addressbook/models/update_manager.dart';
 import 'package:tu_wien_addressbook/screens/login_screen.dart';
@@ -7,7 +8,9 @@ import 'package:tu_wien_addressbook/screens/person_search.dart';
 import 'package:tu_wien_addressbook/screens/settings_screen.dart';
 import 'package:tu_wien_addressbook/widgets/utils.dart';
 
-void main() => runApp(App());
+void main() async {
+  runApp(App());
+}
 
 class App extends StatelessWidget {
   // This widget is the root of your application.
@@ -18,8 +21,8 @@ class App extends StatelessWidget {
       locale: Locale('en'),
       theme: ThemeData(
         brightness: Brightness.light,
-        appBarTheme: AppBarTheme(brightness: Brightness.dark),
-        accentColor: Colors.indigo,
+        appBarTheme:
+            AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light),
         primarySwatch: Colors.indigo,
         scaffoldBackgroundColor: Colors.indigo[50],
         cardTheme: CardTheme(
@@ -29,7 +32,6 @@ class App extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        accentColor: Colors.blue,
         primarySwatch: Colors.blue,
         //scaffoldBackgroundColor: Colors.blueGrey[50],
         cardTheme: CardTheme(

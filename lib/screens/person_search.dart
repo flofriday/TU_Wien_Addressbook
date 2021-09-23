@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tu_wien_addressbook/models/person.dart';
 import 'package:tu_wien_addressbook/models/suggestion_manager.dart';
 import 'package:tu_wien_addressbook/models/tiss.dart';
@@ -111,21 +112,6 @@ class PersonSearch extends SearchDelegate<Null> {
       _cache[query] = data.results;
       return data.results;
     }
-  }
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    if (theme.brightness == Brightness.dark) return theme;
-
-    return theme.copyWith(
-        primaryColor: theme.cardColor,
-        primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.grey),
-        primaryColorBrightness: MediaQuery.of(context).platformBrightness,
-        primaryTextTheme: theme.textTheme,
-        appBarTheme: AppBarTheme(
-          brightness: Brightness.light,
-        ));
   }
 
   @override
@@ -382,21 +368,29 @@ class PersonSearch extends SearchDelegate<Null> {
               data = snapshot.data!;
             }
 
-            return ListView.separated(
-                itemCount: data.length,
-                separatorBuilder: (context, index) => Divider(
-                      height: 4,
-                    ),
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    leading: Icon(Icons.access_time),
-                    title: Text(data[index]),
-                    onTap: () {
-                      query = data[index];
-                      showResults(context);
-                    },
-                  );
-                });
+            if (data.isEmpty) {
+              return Center(
+                child: Text("Searchhistory is empty."),
+              );
+            }
+
+            return Scrollbar(
+              child: ListView.separated(
+                  itemCount: data.length,
+                  separatorBuilder: (context, index) => Divider(
+                        height: 4,
+                      ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      leading: Icon(Icons.access_time),
+                      title: Text(data[index]),
+                      onTap: () {
+                        query = data[index];
+                        showResults(context);
+                      },
+                    );
+                  }),
+            );
           }),
     );
   }

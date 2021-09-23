@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.red),
                       ),
-                      child: const Text('Logout'),
+                      child: const Text('LOGOUT'),
                       onPressed: () {
                         _logout();
                       },
