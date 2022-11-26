@@ -22,42 +22,42 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.3
+  cupertino_icons: ^1.0.5
 
   # Add a library to safely construct URIs
   uri: ^1.0.0
 
   # A library to interact with the web
-  http: ^0.13.3
+  http: ^0.13.5
 
   # To make the json_serializable work
-  json_annotation: ^4.0.1
+  json_annotation: ^4.7.0
 
   # A library to display hyperlinks
-  url_launcher: ^6.0.9
+  url_launcher: ^6.1.7
 
   # To parse HTML encoded text as normal text
   html_character_entities: ^1.0.0+1
 
   # Save simple key-value pairs on the device
-  shared_preferences: ^2.0.6
+  shared_preferences: ^2.0.15
 
   # To share text with other apps
-  share_plus: ^2.1.4
+  share_plus: ^6.3.0
 
   # Get information about the app itself
-  package_info_plus: ^1.0.4
+  package_info_plus: ^3.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # To generate the json decode code
-  json_serializable: ^5.0.0
-  build_runner: ^2.0.6
+  json_serializable: ^6.5.4
+  build_runner: ^2.3.2
 
   # Native splashscreen to avoid white flash at startup
-  flutter_native_splash: ^1.2.0
+  flutter_native_splash: ^2.2.15
 
 
 # For information on the generic Dart part of this file, see the
