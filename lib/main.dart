@@ -20,17 +20,18 @@ class App extends StatelessWidget {
       title: 'TU Addressbook',
       locale: Locale('en'),
       theme: ThemeData(
+        useMaterial3: true,
         brightness: Brightness.light,
-        appBarTheme:
-            AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light),
+        appBarTheme: AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
         primarySwatch: Colors.indigo,
-        scaffoldBackgroundColor: Colors.indigo[50],
+        //scaffoldBackgroundColor: Colors.indigo[50],
         cardTheme: CardTheme(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
         ),
       ),
       darkTheme: ThemeData(
+        useMaterial3: true,
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
         //scaffoldBackgroundColor: Colors.blueGrey[50],

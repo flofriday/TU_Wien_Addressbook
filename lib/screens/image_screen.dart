@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ImageScreen extends StatelessWidget {
   final String _imageUrl;
@@ -11,14 +12,20 @@ class ImageScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        foregroundColor: Colors.black,
-        backgroundColor: Color.fromARGB(0xAA, 0x00, 0x00, 0x00),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.black,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
         elevation: 0,
         title: Text(
           _title,
-          style: TextStyle(color: Colors.white),
         ),
-        iconTheme: IconThemeData(color: Colors.white),
+
+        // FIXME: this shouldn't be necessary but I couldn't get the color
+        // to work any other way.
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: InteractiveViewer(
         clipBehavior: Clip.none,
